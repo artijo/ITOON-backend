@@ -16,6 +16,174 @@ model User {
   name      String?
   password  String
   phone     String?  @unique
+  creator   Creator?
+  comments  Comment[]
+  reviews   Review[]
+  buyEpisodes buyEpisode[]
+  favoriteCartoons favoriteCartoon[]
+  histories history[]
+  coinTransactions CoinTransaction[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Creator {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  cartoons  Cartoon[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Cartoon {
+  id        Int      @id @default(autoincrement())
+  name     String
+  description     String @db.VarChar(1000)
+  releaseDate     DateTime
+  thumbnail    String
+  totalEpisodes  Int
+  creatorId    Int
+  creator   Creator  @relation(fields: [creatorId], references: [id])
+  episodes  Episode[]
+  genreId  Int
+  genres   Genre  @relation(fields: [genreId], references: [id])
+  reviews  Review[]
+  buyEpisodes buyEpisode[]
+  favoriteCartoons favoriteCartoon[]
+  histories history[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Episode {
+  id        Int      @id @default(autoincrement())
+  name     String
+  episodeNumber     Int
+  releaseDate     DateTime
+  thumbnail    String
+  cartoonId    Int
+  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  images  Image[]
+  comments  Comment[]
+  buyEpisodes buyEpisode[]
+  histories history[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Genre {
+  id        Int      @id @default(autoincrement())
+  name     String
+  cartoon  Cartoon[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  page     Int
+  name     String
+  url     String
+  episodeId    Int
+  episode   Episode  @relation(fields: [episodeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content     String
+  userId    Int
+  user   User  @relation(fields: [userId], references: [id])
+  episodeId    Int
+  episode   Episode  @relation(fields: [episodeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  rating     Int
+  userId    Int
+  user   User  @relation(fields: [userId], references: [id])
+  cartoonId    Int
+  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model buyEpisode {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user   User  @relation(fields: [userId], references: [id])
+  episodeId    Int
+  episode   Episode  @relation(fields: [episodeId], references: [id])
+  cartoonId    Int
+  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model favoriteCartoon {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user   User  @relation(fields: [userId], references: [id])
+  cartoonId    Int
+  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  favoriteDate DateTime
+  Announcement Announcement[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model history {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user   User  @relation(fields: [userId], references: [id])
+  cartoonId    Int
+  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  episodeId    Int
+  episode   Episode  @relation(fields: [episodeId], references: [id])
+  viewDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model CoinTransaction {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user   User  @relation(fields: [userId], references: [id])
+  purchasename    String
+  date DateTime
+  amount    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Announcement {
+  id        Int      @id @default(autoincrement())
+  title    String
+  content    String
+  date DateTime
+  favoriteId    Int
+  favorite   favoriteCartoon  @relation(fields: [favoriteId], references: [id])
+  // cartoonId    Int
+  // cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  // userId    Int
+  // user   User  @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
