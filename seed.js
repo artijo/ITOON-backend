@@ -18,51 +18,50 @@ function callDate(){
 
 async function main(){
     // User and creator seed
-    // const aliceId = 1000
-    // const alice = await prisma.user.create({
-    //     data:{
-    //         id: aliceId,
-    //         email: 'test@gmail.com',
-    //         name: 'alice',
-    //         password: '1234',
-    //         phone: '0833636470',
-    //     },
-    // })
+    const aliceId = 1000
+    const alice = await prisma.user.create({
+        data:{
+            id: aliceId,
+            email: 'test@gmail.com',
+            name: 'alice',
+            password: '1234',
+            phone: '0833636470',
+        },
+    })
 
-    // const creator = await prisma.creator.create({
-    //     data:{
-    //         id: 1000,
-    //         userId: aliceId,
-    //     }
-    // })
-    // // Genre
+    const creator = await prisma.creator.create({
+        data:{
+            id: 1000,
+            userId: aliceId,
+        }
+    })
+    // Genre
+    const createManyGenre = await prisma.genre.createMany({
+        "data": [
+            {
+                "id": 1000,
+                "name": "Fastasy"
+            },
+            {
+                "id": 1001,
+                "name": "Action"
+            },
+            {
+                "id": 1002,
+                "name": "Romance"
+            },
+            {
+                "id": 1003,
+                "name": "Comedy"
+            },
+            {
+                "id": 1004,
+                "name": "Sci-Fi"
+            }
+        ]
+    })
 
-    // const createManyGenre = await prisma.genre.createMany({
-    //     "data": [
-    //         {
-    //             "id": 1000,
-    //             "name": "Fastasy"
-    //         },
-    //         {
-    //             "id": 1001,
-    //             "name": "Action"
-    //         },
-    //         {
-    //             "id": 1002,
-    //             "name": "Romance"
-    //         },
-    //         {
-    //             "id": 1003,
-    //             "name": "Comedy"
-    //         },
-    //         {
-    //             "id": 1004,
-    //             "name": "Sci-Fi"
-    //         }
-    //     ]
-    // })
-
-
+// cartoon
     const cartoonCreateMany = await prisma.cartoon.createMany({
         data:[
             {
@@ -83,7 +82,7 @@ async function main(){
                 "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
                 "totalEpisodes": 90,
                 "creatorId": 1000,
-                "genreId": 1000
+                "genreId": 1001
             },
             {
                 "id": 1002,
@@ -93,7 +92,7 @@ async function main(){
                 "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
                 "totalEpisodes": 90,
                 "creatorId": 1000,
-                "genreId": 1000
+                "genreId": 1002
             },
             {
                 "id": 1003,
@@ -103,7 +102,7 @@ async function main(){
                 "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
                 "totalEpisodes": 90,
                 "creatorId": 1000,
-                "genreId": 1000
+                "genreId": 1003
             },
             {
                 "id": 1004,
@@ -113,7 +112,17 @@ async function main(){
                 "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
                 "totalEpisodes": 90,
                 "creatorId": 1000,
-                "genreId": 1000
+                "genreId": 1004
+            }, 
+            {
+                "id": 1005,
+                "name": "cartoon06",
+                "description": "wow",
+                "releaseDate": new Date(),
+                "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
+                "totalEpisodes": 90,
+                "creatorId": 1000,
+                "genreId": 1004
             }, 
         ]
     })
