@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Import your controllers here
 const { getallUsers } = require('./Controllers/users');
-const { getAllCartoon } = require('./Controllers/cartoon');
+const { getAllCartoon, getRecAll , getRecByGenre } = require('./Controllers/cartoon');
 // Import your middleware here
 
 // Define your routes here
@@ -12,9 +12,10 @@ router.get('/', (req, res) => {
 });
 router.get('/users', getallUsers)
 
-
-router.get('/allCartoon',getAllCartoon)
-
+// Cartoon
+router.get('/allCartoon', getAllCartoon)
+router.get('/recCartoon', getRecAll)
+router.get('/getRecByGenre/:genreid', getRecByGenre)
 
 
 router.get('/all')

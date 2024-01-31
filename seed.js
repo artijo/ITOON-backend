@@ -64,70 +64,79 @@ async function main(){
 // cartoon
     const cartoonCreateMany = await prisma.cartoon.createMany({
         data:[
-            {
+            { 
                 "id": 1000,
-                "name": "cartoon01",
-                "description": "wow",
+                "name": "The Meaning of You",
+                "description": "The Meaning of You",
                 "releaseDate": new Date(),
-                "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
+                "thumbnail": "https://www.oremanga.net/wp-content/uploads/2023/11/The-Meaning-of-You.jpg",
                 "totalEpisodes": 90,
                 "creatorId": 1000,
-                "genreId": 1000
+                "genreId": 1002
             },
             {
                 "id": 1001,
-                "name": "cartoon02",
-                "description": "wow",
+                "name": "I Went On Strike Because It Was A Time Limit",
+                "description": "I Went On Strike Because It Was A Time Limit",
                 "releaseDate": new Date(),
-                "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
+                "thumbnail": "https://www.oremanga.net/wp-content/uploads/2023/03/I-Went-On-Strike-Because-It-Was-A-Time-Limit.jpg",
                 "totalEpisodes": 90,
                 "creatorId": 1000,
                 "genreId": 1001
             },
             {
                 "id": 1002,
-                "name": "cartoon03",
-                "description": "wow",
+                "name": "Death Is The Only Ending For The Villainess",
+                "description": "Death Is The Only Ending For The Villainess",
                 "releaseDate": new Date(),
-                "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
-                "totalEpisodes": 90,
-                "creatorId": 1000,
-                "genreId": 1002
-            },
-            {
-                "id": 1003,
-                "name": "cartoon04",
-                "description": "wow",
-                "releaseDate": new Date(),
-                "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
+                "thumbnail": "https://www.oremanga.net/wp-content/uploads/2020/05/Death-Is-The-Only-Ending-For-The-Villainess.jpeg",
                 "totalEpisodes": 90,
                 "creatorId": 1000,
                 "genreId": 1003
             },
             {
-                "id": 1004,
-                "name": "cartoon05",
-                "description": "wow",
+                "id": 1003,
+                "name": "Elena Evoy Observation Diary",
+                "description": "Elena Evoy Observation Diary",
                 "releaseDate": new Date(),
-                "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
+                "thumbnail": "https://www.oremanga.net/wp-content/uploads/2023/10/Elena-Evoy-Observation-Diary.jpg",
                 "totalEpisodes": 90,
                 "creatorId": 1000,
                 "genreId": 1004
-            }, 
+            },
             {
-                "id": 1005,
-                "name": "cartoon06",
-                "description": "wow",
+                "id": 1004,
+                "name": "I Became the Tyrant’s Translator",
+                "description": "I Became the Tyrant’s Translator",
                 "releaseDate": new Date(),
-                "thumbnail": "https://reapertrans.com/wp-content/uploads/2023/12/Locked-Up.png",
+                "thumbnail": "https://www.oremanga.net/wp-content/uploads/2023/04/I-Became-the-Tyrants-Translator.jpg",
                 "totalEpisodes": 90,
                 "creatorId": 1000,
-                "genreId": 1004
+                "genreId": 1002
             }, 
+            { //Fastasy
+                "id": 1005,
+                "name": "Superball Girl",
+                "description": "Superball Girl",
+                "releaseDate": new Date(),
+                "thumbnail": "https://www.oremanga.net/wp-content/uploads/2022/11/Superball-Girl.jpg",
+                "totalEpisodes": 90,
+                "creatorId": 1000,
+                "genreId": 1001
+            }, 
+            { 
+                "id": 1006,
+                "name": "Eiyuu to Kenja no Tensei Kon",
+                "description": "Eiyuu to Kenja no Tensei Kon",
+                "releaseDate": new Date(),
+                "thumbnail": "https://www.oremanga.net/wp-content/uploads/2023/02/Eiyuu-to-Kenja-no-Tensei-Kon.jpg",
+                "totalEpisodes": 90,
+                "creatorId": 1000,
+                "genreId": 1002
+            },  
         ]
     })
 }
-
 
 main()
   .then(async () => {
