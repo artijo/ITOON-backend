@@ -21,7 +21,7 @@ router.get('/getRecByGenre/:genreid', getRecByGenre)
 // User
 router.get('/all')
 router.post('/testupload', testupload);
-router.post('/addUser', insertUser);
+router.post('/signUp', insertUser);
 
 
 module.exports = router;
