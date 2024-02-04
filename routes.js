@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Import your controllers here
 const { getallUsers, insertUser} = require('./Controllers/users');
-const { getAllCartoon, getRecAll , getRecByGenre } = require('./Controllers/cartoon');
+const { getAllCartoon, getRecAll , getRecByGenre, getCartoon } = require('./Controllers/cartoon');
 const { testupload } = require('./Controllers/fortest');
 // Import your middleware here
 
@@ -17,6 +17,7 @@ router.get('/users', getallUsers)
 router.get('/allCartoon', getAllCartoon)
 router.get('/recCartoon', getRecAll)
 router.get('/getRecByGenre/:genreid', getRecByGenre)
+router.get('/Cartoon/:cartoonid',getCartoon)
 
 // User
 router.get('/all')

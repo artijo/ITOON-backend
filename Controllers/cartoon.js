@@ -49,10 +49,25 @@ const getRecByGenre = async(req, res) => {
     }
 }
 
+const getCartoon = async(req,res) => {
+    const {cartoonid} = req.params
+    try{
+        const cartoons = await db.cartoon.findUnique({
+            where:{
+                id: Number(cartoonid)
+            }
+        })
+        res.json(cartoons)
+    }
+    catch(error){
+        res.status(500).json(error)
+    }
+}
 
 
 module.exports = {
     getAllCartoon,
     getRecAll,
-    getRecByGenre
+    getRecByGenre,
+    getCartoon
 }
