@@ -8,10 +8,10 @@ const checkLogin = async (req,res) => {
             where : {email}
         });
         if(!user){
-            return res.status(400).json(error);
+            return res.status(400).json({error:"The email is incorrect."});
         }
         if(password != user.password){
-            return res.status(400).json(error);
+            return res.status(400).json({error:"The password is not match"});
         }
 
         res.json(user)
