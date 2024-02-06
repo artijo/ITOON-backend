@@ -5,6 +5,7 @@ const router = express.Router();
 const { getallUsers } = require('./Controllers/users');
 const { getAllCartoon, getRecAll} = require('./Controllers/cartoon');
 const { testupload } = require('./Controllers/fortest');
+const { checkLogin } = require('./Middlewares/auth');
 // Import your middleware here
 
 // Define your routes here
@@ -16,10 +17,10 @@ router.get('/users', getallUsers)
 // Cartoon
 router.get('/allCartoon', getAllCartoon)
 router.get('/recCartoon', getRecAll)
-
 router.get('/all')
 router.post('/testupload', testupload);
-
+router.post('/signUp', insertUser);
+router.post('/login',checkLogin)
 
 
 module.exports = router;
