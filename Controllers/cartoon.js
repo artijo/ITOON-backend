@@ -1,10 +1,11 @@
 const db = require('../lib/prisma');
 
+
 const getAllCartoon = async(req,res) => {
     try{
         const cartoonList = await db.cartoon.findMany({
             include:{
-                genres: true, // All post where genres = genre id in filed record cartoon?
+                genres: true,
             }
         })
         res.json(cartoonList)
@@ -13,9 +14,7 @@ const getAllCartoon = async(req,res) => {
     }
 }
 
-// Section of Genre
-// Top five
-// Rec is mean "Recommend" 
+
 const getRecAll = async(req,res) => {
     try{
         const cartoonList = await db.cartoon.findMany({
@@ -32,7 +31,7 @@ const getRecAll = async(req,res) => {
 
 
 const getRecByGenre = async(req, res) => {
-    const { genreid } = req.params
+    const  { genreid }  = req.params
     console.log(genreid)
     try{
         const cartoonList = await db.cartoon.findMany({
@@ -51,8 +50,9 @@ const getRecByGenre = async(req, res) => {
 
 
 
+
 module.exports = {
     getAllCartoon,
     getRecAll,
-    getRecByGenre
+    getRecByGenre,
 }
