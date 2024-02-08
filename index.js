@@ -5,6 +5,7 @@ const routes = require('./routes');
 const path = require('path');
 
 require('dotenv').config();
+app.use(express.static('public'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Middleware for JSON parsing

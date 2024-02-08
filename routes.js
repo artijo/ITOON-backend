@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import your controllers here
-const { getallUsers } = require('./Controllers/users');
+const { getallUsers, insertUser } = require('./Controllers/users');
 const { getAllCartoon, getRecAll} = require('./Controllers/cartoon');
 const { testupload } = require('./Controllers/fortest');
 const { checkLogin } = require('./Middlewares/auth');
