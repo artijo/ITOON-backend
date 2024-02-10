@@ -1,4 +1,5 @@
 const db = require('../lib/prisma');
+const upload = require('../lib/upload');
 
 
 const getAllCartoon = async(req,res) => {
@@ -63,11 +64,42 @@ const getCartoon = async(req,res) => {
     }
 }
 
+const uploadGartoon = async (req,res) => {
+    // upload.single('thumbnail')(req,res,(err) => {
+    //     if(err){
+    //         res.json(err)
+    //     }
+    //     else{
+    //         res.json(req.file)
+    //     }
+    // })
+    try{
+        const {name,description} = req.body
+        const newCartoon = await db.cartoon.create({
+            data:{
+                name,
+                description,
+                releaseDate: new Date(),
+                thumbnail: req.file.path,
+                totalEpisodes: 0,
+                creatorId: 1000,
+                genreId: 1001
+            }
+        })
+        res.json(newCartoon)
+    }
+    catch(error){
+        res.status(500).json(error)
+        console.log(error)
+    }
+}
+
 
 
 module.exports = {
     getAllCartoon,
     getRecAll,
     getRecByGenre,
-    getCartoon
+    getCartoon,
+    uploadGartoon
 }

@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const upload = require('./lib/upload');
 
 // Import your controllers here
 const { getallUsers, insertUser } = require('./Controllers/users');
-const { getAllCartoon, getRecAll, getCartoon, getRecByGenre} = require('./Controllers/cartoon');
-const { testupload } = require('./Controllers/fortest');
+const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon} = require('./Controllers/cartoon');
 const { checkLogin } = require('./Middlewares/auth');
 // Import your middleware here
 
@@ -18,10 +18,10 @@ router.get('/users', getallUsers)
 router.get('/allCartoon', getAllCartoon)
 router.get('/recCartoon', getRecAll)
 router.get('/all')
-router.post('/testupload', testupload);
 router.post('/signUp', insertUser);
 router.post('/login',checkLogin)
 router.get('/getRecByGenre/:genreid', getRecByGenre)
 router.get('/Cartoon/:cartoonid',getCartoon)
+router.post('/newcartoon', upload.single('thumbnail'), uploadGartoon);
 
 module.exports = router;
