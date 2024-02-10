@@ -69,4 +69,5 @@ module.exports = {
     getAllCartoon,
     getRecAll,
     getRecByGenre,
+    getCartoon
 }
