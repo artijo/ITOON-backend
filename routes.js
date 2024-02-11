@@ -31,6 +31,6 @@ router.get('/Cartoon/:cartoonid',getCartoon)
 router.post('/newcartoon',checkLoginWeb, isCreator, upload.single('thumbnail'), uploadGartoon);
 
 // Episode
-router.post('/newEpisode',upload.fields([{name:'cover'},{name:'images'}]), newEpisode);
+router.post('/newEpisode',checkLoginWeb,isCreator,upload.fields([{name:'cover'},{name:'images'}]), newEpisode);
 
 module.exports = router;
