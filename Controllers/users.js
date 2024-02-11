@@ -73,7 +73,7 @@ const insertUser = async (req, res) => {
                 id: newid,
                 email: userData.email,
                 name: userData.name,
-                password: userData.password,
+                password: hash,
                 phone: userData.phone
             }
         });
@@ -90,5 +90,6 @@ const insertUser = async (req, res) => {
 module.exports = {
     getallUsers,
     insertUser,
-    getUserbyID
+    getUserbyID,
+    loginWeb
 }
