@@ -39,23 +39,13 @@ const login = async (req, res) => {
 
 const insertUser = async (req, res) => {
     const userData = req.body;
-    const salt = bcrypt.genSaltSync(process.env.SALT_ROUNDS);
+    const salt = bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS));
     const hash = bcrypt.hashSync(userData.password, salt);
     
     try {
-        const findusers = await db.user.findMany();
-        let userid = 1;
-        findusers.forEach(index =>{
-            if(index.id > userid){
-                userid = index.id;
-            }else{
-                return userid;
-            }
-        })
-        const newid = userid+1;
+        
         const newUser = await db.user.create({
             data:{
-                id: newid,
                 email: userData.email,
                 name: userData.name,
                 password: hash,
