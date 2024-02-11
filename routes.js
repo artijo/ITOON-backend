@@ -3,7 +3,7 @@ const router = express.Router();
 const upload = require('./lib/upload');
 
 // Import your controllers here
-const { getallUsers, insertUser, loginWeb } = require('./Controllers/users');
+const { getallUsers, insertUser, loginWeb,getUserbyID } = require('./Controllers/users');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon} = require('./Controllers/cartoon');
 const { newEpisode} = require('./Controllers/episode');
 // Import your middleware here
@@ -14,11 +14,7 @@ router.get('/', (req, res) => {
     res.send('Hello from Kotlin Jetpack Compose API!');
 });
 router.get('/users', getallUsers)
-router.post('/loginweb', loginWeb)
-router.post('/authcheckweb', checkLoginWeb, isCreator, (req, res) => {
-    res.json({ status:'ok',message: 'Authorized' });
-}
-);
+router.get('/users/:id',getUserbyID)
 
 // Cartoon
 router.get('/allCartoon', getAllCartoon)

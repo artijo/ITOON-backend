@@ -12,6 +12,20 @@ const getallUsers = async (req, res) => {
     }
 }
 
+const getUserbyID = async(req,res) => {
+    const {id} = req.params
+    try{
+        const usersId = await db.user.findUnique({
+            where:{
+                id:Number(id)
+            }
+        })
+        res.json(usersId)  
+    } catch(error){
+        res.json(error);
+    }
+}
+
 const loginWeb = async (req, res) => {
     const userData = req.body;
     try {
@@ -37,18 +51,29 @@ const loginWeb = async (req, res) => {
     }
 }
 
+
 const insertUser = async (req, res) => {
     const userData = req.body;
     const salt = bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS));
     const hash = bcrypt.hashSync(userData.password, salt);
     
     try {
-        
+        const findusers = await db.user.findMany();
+        let userid = 1;
+        findusers.forEach(index =>{
+            if(index.id > userid){
+                userid = index.id;
+            }else{
+                return userid;
+            }
+        })
+        const newid = userid+1;
         const newUser = await db.user.create({
             data:{
+                id: newid,
                 email: userData.email,
                 name: userData.name,
-                password: hash,
+                password: userData.password,
                 phone: userData.phone
             }
         });
@@ -65,5 +90,5 @@ const insertUser = async (req, res) => {
 module.exports = {
     getallUsers,
     insertUser,
-    loginWeb
+    getUserbyID
 }
