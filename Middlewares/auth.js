@@ -41,8 +41,28 @@ const checkLoginWeb = async (req,res,next) => {
     }
 }
 
+const isCreator = async (req,res,next) => {
+    let token = req.headers.authorization.split(' ')[1];
+    if(!token){
+        return res.status(401).json({error:"Unauthorized"});
+    }
+    try{
+        const user = jwt.verify(token,process.env.JWT_SECRET);
+        const userDetail = await db.creator.findUnique({
+            where:{userId:user.id}
+        });
+        if(!userDetail){
+            return res.status(401).json({error:"Unauthorized"});
+        }
+        next();
+    } catch(error){
+        res.status(401).json({error:"Unauthorized"});
+    }
+}
+
 
 module.exports = {
     checkLogin,
-    checkLoginWeb
+    checkLoginWeb,
+    isCreator
 };
