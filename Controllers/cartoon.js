@@ -1,4 +1,3 @@
-const e = require('cors');
 const db = require('../lib/prisma');
 const upload = require('../lib/upload');
 
@@ -75,8 +74,7 @@ const uploadGartoon = async (req,res) => {
     //     }
     // })
     try{
-        const {name,description, episode} = req.body
-        console.log(episode)
+        const {name,description, episode, creatorId} = req.body
         const newCartoon = await db.cartoon.create({
             data:{
                 name,
@@ -84,7 +82,7 @@ const uploadGartoon = async (req,res) => {
                 releaseDate: new Date(),
                 thumbnail: req.file.path,
                 totalEpisodes: Number(episode),
-                creatorId: 1000,
+                creatorId: req.creatorId,
                 genreId: 1001
             }
         })
