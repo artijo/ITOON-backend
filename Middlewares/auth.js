@@ -1,4 +1,5 @@
 const db = require('../lib/prisma');
+const jwt = require('jsonwebtoken');
 
 const checkLogin = async (req,res) => {
     const {email,password} = req.body;
@@ -20,6 +21,27 @@ const checkLogin = async (req,res) => {
     }
 };
 
+const checkLoginWeb = async (req,res,next) => {
+    let token = req.headers.authorization.split(' ')[1];
+    if(!token){
+        return res.status(401).json({error:"Unauthorized"});
+    }
+    try{
+        const user = jwt.verify(token,process.env.JWT_SECRET);
+        const userDetail = await db.user.findUnique({
+            where:{email:user.email}
+        });
+        if(!userDetail){
+            return res.status(401).json({error:"Unauthorized"});
+        }
+        next();
+    } catch(error){
+        res.status(401).json({error:"Unauthorized"});
+    }
+}
+
+
 module.exports = {
-    checkLogin
+    checkLogin,
+    checkLoginWeb
 };
