@@ -34,6 +34,7 @@ const checkLoginWeb = async (req,res,next) => {
         if(!userDetail){
             return res.status(401).json({error:"Unauthorized"});
         }
+        console.log(user.email, userDetail);
         next();
     } catch(error){
         res.status(401).json({error:"Unauthorized"});

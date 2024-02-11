@@ -12,7 +12,7 @@ const getallUsers = async (req, res) => {
     }
 }
 
-const login = async (req, res) => {
+const loginWeb = async (req, res) => {
     const userData = req.body;
     try {
         const user = await db.user.findUnique({
@@ -64,5 +64,6 @@ const insertUser = async (req, res) => {
 
 module.exports = {
     getallUsers,
-    insertUser
+    insertUser,
+    loginWeb
 }
