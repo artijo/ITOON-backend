@@ -136,6 +136,25 @@ async function main(){
             },  
         ]
     })
+
+    const cartoonEp = await prisma.episode.createMany({
+        data:[
+            {
+                "name":"The Meaning of You",
+                "episodeNumber":1,
+                "releaseDate":new Date(),
+                "thumbnail":"https://www.oremanga.net/wp-content/uploads/2023/11/The-Meaning-of-You.jpg",
+                "cartoonId":1000,
+            },
+            {
+                "name":"The Meaning of You",
+                "episodeNumber":2,
+                "releaseDate":new Date(),
+                "thumbnail":"https://www.oremanga.net/wp-content/uploads/2023/11/The-Meaning-of-You.jpg",
+                "cartoonId":1000,
+            },
+        ]
+    })
 }
 
 main()

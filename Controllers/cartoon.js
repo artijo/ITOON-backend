@@ -94,6 +94,21 @@ const uploadGartoon = async (req,res) => {
     }
 }
 
+const getEpCartoon = async (req,res) => {
+    try{
+        const {cartoonid} = req.params
+        const callEp = await db.episode.findMany({
+            where:{
+                cartoonId:Number(cartoonid)
+            }
+        })
+        res.json(callEp)
+    }catch(error){
+        res.status(500).json(error)
+        console.log(error)
+    }
+}
+
 
 
 module.exports = {
@@ -101,5 +116,6 @@ module.exports = {
     getRecAll,
     getRecByGenre,
     getCartoon,
-    uploadGartoon
+    uploadGartoon,
+    getEpCartoon,
 }
