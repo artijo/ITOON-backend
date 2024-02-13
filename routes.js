@@ -3,8 +3,8 @@ const router = express.Router();
 const upload = require('./lib/upload');
 
 // Import your controllers here
-const { getallUsers, insertUser, loginWeb ,getUserbyID } = require('./Controllers/users');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon} = require('./Controllers/cartoon');
+const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp } = require('./Controllers/users');
 const { newEpisode} = require('./Controllers/episode');
 // Import your middleware here
 const { checkLogin,checkLoginWeb, isCreator } = require('./Middlewares/auth');
@@ -20,6 +20,7 @@ router.post('/authcheckweb', checkLoginWeb, isCreator, (req, res) => {
     res.json({ status:'ok',message: 'Authorized' });
 }
 );
+router.get('/users/:email/:password',loginApp)
 
 // Cartoon
 router.get('/allCartoon', getAllCartoon)

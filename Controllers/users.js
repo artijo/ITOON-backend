@@ -84,6 +84,34 @@ const insertUser = async (req, res) => {
     }
 };
 
+const loginApp = async (req,res) =>{
+    const email = req.params.email
+    const password = req.params.password
+    if(!email || !password){
+        return res.status(400).json({message:"Please enter email and password"})
+    }
+    try{
+        const users = await db.user.findUnique({
+            where:{
+                email:email
+            }
+        })
+        if(users){
+            const passwordMatch = bcrypt.compareSync(password,users.password)
+            if(passwordMatch){
+                res.json(users)
+            }else{
+                res.status(400).json({message:"Password incorrect."})
+            }
+        }else{
+            res.status(400).json({message:"There is no user using this email."})
+        }
+    }catch (error) {
+        console.error('Error logging in:', error);
+        res.status(400).json(error);
+    }
+}
+
 
 
 
@@ -91,5 +119,6 @@ module.exports = {
     getallUsers,
     insertUser,
     getUserbyID,
-    loginWeb
+    loginWeb,
+    loginApp
 }
