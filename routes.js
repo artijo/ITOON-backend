@@ -6,6 +6,7 @@ const upload = require('./lib/upload');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre} = require('./Controllers/cartoon');
 const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp } = require('./Controllers/users');
 const { newEpisode} = require('./Controllers/episode');
+const { getAllComment} = require('./Controllers/comment');
 // Import your middleware here
 const { checkLogin,checkLoginWeb, isCreator } = require('./Middlewares/auth');
 
@@ -37,5 +38,8 @@ router.get('/allgenre',getAllGenre)
 
 // Episode
 router.post('/newEpisode',checkLoginWeb,isCreator,upload.fields([{name:'cover'},{name:'images'}]), newEpisode);
+
+//Comment
+router.get('/comments',getAllComment)
 
 module.exports = router;
