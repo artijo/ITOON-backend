@@ -30,6 +30,15 @@ const getRecAll = async(req,res) => {
     }
 }
 
+const getAllGenre = async(req,res) => {
+    try{
+        const genreList = await db.genre.findMany()
+        res.json(genreList)
+    }catch(error){
+        res.json(error)
+    }
+}
+
 
 const getRecByGenre = async(req, res) => {
     const  { genreid }  = req.params
@@ -74,7 +83,7 @@ const uploadGartoon = async (req,res) => {
     //     }
     // })
     try{
-        const {name,description, episode, creatorId} = req.body
+        const {name,description, episode, type} = req.body
         const newCartoon = await db.cartoon.create({
             data:{
                 name,
@@ -83,7 +92,7 @@ const uploadGartoon = async (req,res) => {
                 thumbnail: req.file.path,
                 totalEpisodes: Number(episode),
                 creatorId: req.creatorId,
-                genreId: 1001
+                genreId: Number(type)
             }
         })
         res.json(newCartoon)
@@ -118,4 +127,5 @@ module.exports = {
     getCartoon,
     uploadGartoon,
     getEpCartoon,
+    getAllGenre
 }
