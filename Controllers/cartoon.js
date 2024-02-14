@@ -109,6 +109,16 @@ const getEpCartoon = async (req,res) => {
         const callEp = await db.episode.findMany({
             where:{
                 cartoonId:Number(cartoonid)
+            },
+            orderBy:{
+                episodeNumber:'desc'
+            },
+            include:{
+                cartoon:{
+                    select:{
+                        totalEpisodes:true
+                    }
+                }
             }
         })
         res.json(callEp)

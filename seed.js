@@ -70,7 +70,7 @@ async function main(){
                 "description": "The Meaning of You",
                 "releaseDate": new Date(),
                 "thumbnail": "https://www.oremanga.net/wp-content/uploads/2023/11/The-Meaning-of-You.jpg",
-                "totalEpisodes": 90,
+                "totalEpisodes": 2,
                 "creatorId": 1000,
                 "genreId": 1002
             },
@@ -80,7 +80,7 @@ async function main(){
                 "description": "I Went On Strike Because It Was A Time Limit",
                 "releaseDate": new Date(),
                 "thumbnail": "https://www.oremanga.net/wp-content/uploads/2023/03/I-Went-On-Strike-Because-It-Was-A-Time-Limit.jpg",
-                "totalEpisodes": 90,
+                "totalEpisodes": 0,
                 "creatorId": 1000,
                 "genreId": 1001
             },
@@ -90,7 +90,7 @@ async function main(){
                 "description": "Death Is The Only Ending For The Villainess",
                 "releaseDate": new Date(),
                 "thumbnail": "https://www.oremanga.net/wp-content/uploads/2020/05/Death-Is-The-Only-Ending-For-The-Villainess.jpeg",
-                "totalEpisodes": 90,
+                "totalEpisodes": 0,
                 "creatorId": 1000,
                 "genreId": 1003
             },
@@ -100,7 +100,7 @@ async function main(){
                 "description": "Elena Evoy Observation Diary",
                 "releaseDate": new Date(),
                 "thumbnail": "https://www.oremanga.net/wp-content/uploads/2023/10/Elena-Evoy-Observation-Diary.jpg",
-                "totalEpisodes": 90,
+                "totalEpisodes": 0,
                 "creatorId": 1000,
                 "genreId": 1004
             },
@@ -110,7 +110,7 @@ async function main(){
                 "description": "I Became the Tyrant’s Translator",
                 "releaseDate": new Date(),
                 "thumbnail": "https://www.oremanga.net/wp-content/uploads/2023/04/I-Became-the-Tyrants-Translator.jpg",
-                "totalEpisodes": 90,
+                "totalEpisodes": 0,
                 "creatorId": 1000,
                 "genreId": 1002
             }, 
@@ -120,7 +120,7 @@ async function main(){
                 "description": "Superball Girl",
                 "releaseDate": new Date(),
                 "thumbnail": "https://www.oremanga.net/wp-content/uploads/2022/11/Superball-Girl.jpg",
-                "totalEpisodes": 90,
+                "totalEpisodes": 0,
                 "creatorId": 1000,
                 "genreId": 1001
             }, 
@@ -130,7 +130,7 @@ async function main(){
                 "description": "Eiyuu to Kenja no Tensei Kon",
                 "releaseDate": new Date(),
                 "thumbnail": "https://www.oremanga.net/wp-content/uploads/2023/02/Eiyuu-to-Kenja-no-Tensei-Kon.jpg",
-                "totalEpisodes": 90,
+                "totalEpisodes": 0,
                 "creatorId": 1000,
                 "genreId": 1002
             },  
