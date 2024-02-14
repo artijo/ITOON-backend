@@ -56,7 +56,6 @@ const insertUser = async (req, res) => {
     const userData = req.body;
     const salt = bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS));
     const hash = bcrypt.hashSync(userData.password, salt);
-    
     try {
         const findusers = await db.user.findMany();
         let userid = 1;

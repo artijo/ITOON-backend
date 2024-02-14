@@ -129,6 +129,23 @@ const getEpCartoon = async (req,res) => {
 }
 
 
+const getImageEp = async (req,res) =>{
+    const  { episodeId }  = req.params  
+    try{
+        const imageEp = await db.image.findMany({
+            where:{
+                episodeId: Number(episodeId)
+            },
+            orderBy:{
+                page:'asc'
+            },
+        })
+        res.json(imageEp)
+    }catch{
+        res.status(500).json(error)
+        console.log(error)
+    }
+} 
 
 module.exports = {
     getAllCartoon,
@@ -137,5 +154,6 @@ module.exports = {
     getCartoon,
     uploadGartoon,
     getEpCartoon,
-    getAllGenre
+    getAllGenre,
+    getImageEp,
 }
