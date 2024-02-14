@@ -111,6 +111,35 @@ const loginApp = async (req,res) =>{
     }
 }
 
+const updateProfile = async(req,res)=>{
+    const update_id = req.params.id
+    const info = req.body
+    if(!update_id){
+        res.status(400).json(error);
+    }
+    try{
+       
+        const users = await db.user.update(
+
+            {
+                where:{
+                    id:Number(update_id)
+                },
+                
+                data:{
+                    email:info.email,
+                    name:info.name,
+                    password:info.password,
+                    phone:info.phone
+                }
+            }
+        )
+        res.json(users)
+    }catch(error){
+        res.status(400).json(error);
+    }
+}
+
 
 
 
@@ -119,5 +148,6 @@ module.exports = {
     insertUser,
     getUserbyID,
     loginWeb,
-    loginApp
+    loginApp,
+    updateProfile
 }

@@ -128,6 +128,19 @@ const getEpCartoon = async (req,res) => {
     }
 }
 
+const searchCartoon = async (req,res) => {
+    const find = req.params.name
+    const sfind = "%"+find+"%"
+    console.log(find)
+    try{
+        const result = await db.$queryRaw`SELECT * FROM cartoon WHERE name LIKE ${sfind}  `;
+        res.json(result)
+    }catch(error){
+        res.json(error)
+    }
+    
+}
+
 
 const getImageEp = async (req,res) =>{
     const  { episodeId }  = req.params  
@@ -155,5 +168,5 @@ module.exports = {
     uploadGartoon,
     getEpCartoon,
     getAllGenre,
-    getImageEp,
+    searchCartoon
 }

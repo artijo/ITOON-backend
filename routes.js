@@ -3,8 +3,10 @@ const router = express.Router();
 const upload = require('./lib/upload');
 
 // Import your controllers here
-const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre , getImageEp} = require('./Controllers/cartoon');
-const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp } = require('./Controllers/users');
+
+const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile} = require('./Controllers/users');
+const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon} = require('./Controllers/cartoon');
+
 const { newEpisode} = require('./Controllers/episode');
 const { getAllComment} = require('./Controllers/comment');
 // Import your middleware here
@@ -22,6 +24,7 @@ router.post('/authcheckweb', checkLoginWeb, isCreator, (req, res) => {
 }
 );
 router.get('/users/:email/:password',loginApp)
+router.put('/profile/:id',updateProfile)
 
 // Cartoon
 router.get('/allCartoon', getAllCartoon)
@@ -34,9 +37,7 @@ router.get('/Cartoon/:cartoonid',getCartoon)
 router.get('/getAllEpCartoon/:cartoonid',getEpCartoon)
 router.post('/newcartoon',checkLoginWeb, isCreator, upload.single('thumbnail'), uploadGartoon);
 router.get('/allgenre',getAllGenre)
-router.get('/getImageEp/:episodeId',getImageEp)
-
-
+router.get('/searchCartoon/:name',searchCartoon)
 // Episode
 router.post('/newEpisode',checkLoginWeb,isCreator,upload.fields([{name:'cover'},{name:'images'}]), newEpisode);
 
