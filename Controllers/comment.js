@@ -12,16 +12,13 @@ const getAllComment = async(req,res) => {
 
 const insertComment = async (req, res) => {
     const comment = req.body;
+    console.log(comment)
     try {
         const newComment = await db.comment.create({
-            comment:{
-                id: comment.user.id,
+            data:{
                 content : comment.content,
-                episode : comment.episode.id
-            },
-            include:{
-                user:true,
-                episode:true
+                userId: comment.userId,
+                episodeId : comment.episodeId,
             }
         });
         res.json(newComment);
@@ -31,5 +28,6 @@ const insertComment = async (req, res) => {
 };
 
 module.exports = {
-    getAllComment
+    getAllComment,
+    insertComment
 }
