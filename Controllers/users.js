@@ -98,16 +98,16 @@ const loginApp = async (req,res) =>{
         if(users){
             const passwordMatch = bcrypt.compareSync(password,users.password)
             if(passwordMatch){
-                res.json(users)
+                res.json({email,"success":1})
             }else{
-                res.status(400).json({message:"Password incorrect."})
+                res.status(400).json({message:"Password incorrect.","success":0})
             }
         }else{
-            res.status(400).json({message:"There is no user using this email."})
+            res.status(400).json({message:"There is no user using this email.","success":0})
         }
     }catch (error) {
         console.error('Error logging in:', error);
-        res.status(400).json(error);
+        res.status(400).json({error,"success":0});
     }
 }
 
