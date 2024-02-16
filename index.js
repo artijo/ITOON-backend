@@ -12,7 +12,15 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/uploads/episode', express.static(path.join(__dirname, 'uploads/episode')));
 
 // Middleware for JSON parsing
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+// app.use(express.json());
+app.use(
+    bodyParser.json({
+        verify: function(req, res, buf) {
+            req.rawBody = buf;
+        }
+    })
+);
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
