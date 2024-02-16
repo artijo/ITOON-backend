@@ -50,9 +50,6 @@ const webhook = async (request, response) => {
       case "checkout.session.completed":
         const paymentSuccessData = event.data.object;
         const sessionId = paymentSuccessData.id;
-        console.log("sessionId", sessionId);
-        console.log("paymentSuccessData", paymentSuccessData);
-        console.log("status", paymentSuccessData.status)
         try {
         const update = await db.coinTransaction.update({
           where: {
@@ -62,9 +59,22 @@ const webhook = async (request, response) => {
             status: paymentSuccessData.status,
           },
         });
-        if(update){
-          console.log("update success");
-        }
+        
+        const user = await db.user.findUnique({
+          where: {
+            id: update.userId,
+          },
+        });
+
+        const updateUser = await db.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            coin: user.coin + update.amount,
+          },
+        });
+
         }catch (error) {
           console.error('Error updating user:', error);
           response.status(400).json(error);
