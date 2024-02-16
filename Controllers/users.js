@@ -97,8 +97,10 @@ const loginApp = async (req,res) =>{
         })
         if(users){
             const passwordMatch = bcrypt.compareSync(password,users.password)
+            const id = users.id
+            const name = users.name
             if(passwordMatch){
-                res.json({email,"success":1})
+                res.json({id,email,name,"success":1})
             }else{
                 res.status(400).json({message:"Password incorrect.","success":0})
             }
