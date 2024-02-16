@@ -142,6 +142,33 @@ const updateProfile = async(req,res)=>{
     }
 }
 
+const insertCreator = async(req,res)=>{
+    const info = req.body
+    try{
+        const users = await db.user.findUnique({
+            where:{
+                id:Number(info.id)
+            }
+        });
+        if(users){
+            const passwordMatch = bcrypt.compareSync(info.password,users.password)
+            if(passwordMatch){
+            const creator = await db.creator.create({
+                data:{
+                    userId: info.id
+                }
+            });
+            res.json({creator,"success":1})
+            }else{
+                res.json({message:"The password is incorrect"})
+            }
+        }else{
+            res.json({message:"There is no user using this email"})
+        }
+    }catch(error){
+        res.status(500).json(error)
+    }
+}
 
 
 
@@ -151,5 +178,6 @@ module.exports = {
     getUserbyID,
     loginWeb,
     loginApp,
-    updateProfile
+    updateProfile,
+    insertCreator
 }

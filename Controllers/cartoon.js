@@ -7,6 +7,11 @@ const getAllCartoon = async(req,res) => {
         const cartoonList = await db.cartoon.findMany({
             include:{
                 genres: true,
+                creator:{
+                    include:{
+                        user:true
+                    }
+                }
             }
         })
         res.json(cartoonList)
@@ -21,7 +26,12 @@ const getRecAll = async(req,res) => {
         const cartoonList = await db.cartoon.findMany({
             take: 5,
             include:{
-                genres:true
+                genres:true,
+                creator:{
+                    include:{
+                        user:true
+                    }
+                }
             }
         })
         res.json(cartoonList)
@@ -134,6 +144,7 @@ const searchCartoon = async (req,res) => {
     console.log(find)
     try{
         const result = await db.$queryRaw`SELECT * FROM cartoon WHERE name LIKE ${sfind}  `;
+        console.log(result)
         res.json(result)
     }catch(error){
         res.json(error)
@@ -143,7 +154,7 @@ const searchCartoon = async (req,res) => {
 
 
 const getImageEp = async (req,res) =>{
-    const  { episodeId }  = req.params  
+    const  episodeId  = req.params.epId
     try{
         const imageEp = await db.image.findMany({
             where:{
@@ -154,9 +165,8 @@ const getImageEp = async (req,res) =>{
             },
         })
         res.json(imageEp)
-    }catch{
+    }catch(error){
         res.status(500).json(error)
-        console.log(error)
     }
 } 
 
@@ -168,5 +178,6 @@ module.exports = {
     uploadGartoon,
     getEpCartoon,
     getAllGenre,
-    searchCartoon
+    searchCartoon,
+    getImageEp
 }
