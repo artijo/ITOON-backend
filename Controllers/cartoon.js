@@ -144,6 +144,7 @@ const searchCartoon = async (req,res) => {
     console.log(find)
     try{
         const result = await db.$queryRaw`SELECT * FROM cartoon WHERE name LIKE ${sfind}  `;
+        console.log(result)
         res.json(result)
     }catch(error){
         res.json(error)
