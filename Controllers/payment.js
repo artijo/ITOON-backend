@@ -1,36 +1,9 @@
-const stripe = require('stripe')('sk_test_51OkK2WDulwlvkdooh3ykqALd0nifJBu63s9d4ADgPa2fGqqgrE2JgyhzgOHxfBLbq2HQlbY0xbIHQX1REpJNzPaH00vHJyPFhR');
-const { v4: uuidv4 } = require("uuid");
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+// const { v4: uuidv4 } = require("uuid");
 const db = require('../lib/prisma');
 const jwt = require('jsonwebtoken');
 
-const payment =  async (req, res) => {
-  // Use an existing Customer ID if this is a returning customer.
-  const customer = await stripe.customers.create();
-  const ephemeralKey = await stripe.ephemeralKeys.create(
-    {customer: customer.id},
-    {apiVersion: '2023-10-16'}
-  );
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 1099,
-    currency: 'thb',
-    customer: customer.id,
-    // payment_method_types: ['card', 'promptpay'],
-    // In the latest version of the API, specifying the `automatic_payment_methods` parameter
-    // is optional because Stripe enables its functionality by default.
-    automatic_payment_methods: {
-      enabled: true,
-    },
-  });
-
-  res.json({
-    paymentIntent: paymentIntent.client_secret,
-    ephemeralKey: ephemeralKey.secret,
-    customer: customer.id,
-    publishableKey: 'pk_test_51OkK2WDulwlvkdoosW76OZEezA58xYfIm7aVPQvQvajiwG3rcVUg3YXKlRlivhv6FjDJVKpfDx2OnRtFSwKRqDpq00qCjUa9eG'
-  });
-};
-
-const endpointSecret = "whsec_cb11971fda820ef6ab4ddc4844f52c16ff655725faf3203c4fd288b9e7304941";
+const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 const webhook = async (request, response) => {
   
     const sig = request.headers["stripe-signature"];
@@ -104,7 +77,7 @@ const checkout = async (req, res) => {
   });
   try {
     // create payment session
-    const orderId = uuidv4();
+    // const orderId = uuidv4();
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card", "promptpay"],
       line_items: [
@@ -149,8 +122,6 @@ const checkout = async (req, res) => {
 }
 
 module.exports = {
-    payment,
     webhook,
-
     checkout
 }
