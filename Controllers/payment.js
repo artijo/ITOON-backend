@@ -110,8 +110,8 @@ const checkout = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:8888/success.html?id=${orderId}`,
-      cancel_url: `http://localhost:8888/cancel.html?id=${orderId}`,
+      success_url: `${process.env.WEB_CLIENT_URL}/coin-transaction/success`,
+      cancel_url: `${process.env.WEB_CLIENT_URL}/cancel`,
     });
 
     // create order in database (name, address, session id, status)

@@ -169,7 +169,7 @@ model CoinTransaction {
   purchasename    String
   date DateTime
   amount    Int
-  sessionId String @unique
+  sessionId String? @unique
   status    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
