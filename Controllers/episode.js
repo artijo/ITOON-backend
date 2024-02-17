@@ -1,14 +1,13 @@
 const db = require('../lib/prisma');
 
 const newEpisode = async (req, res) => {
-    const { title, cartoonid } = req.body;
-    console.log(cartoonid)
+    const { title, cartoonid, episode } = req.body;
     try {
         const newEP = await db.episode.create({
             data: {
                 name: title,
                 cartoonId: Number(cartoonid),
-                episodeNumber: 1,
+                episodeNumber: Number(episode),
                 thumbnail: req.files.cover[0].path,
                 releaseDate: new Date(),
             }
@@ -29,6 +28,25 @@ const newEpisode = async (req, res) => {
     }
 }
 
+const getEpByCartoonID = async (req, res) => {
+    const { cartoonid } = req.params;
+    //getlastep
+    try {
+        const lastEp = await db.episode.findFirst({
+            where: {
+                cartoonId: Number(cartoonid)
+            },
+            orderBy: {
+                episodeNumber: 'desc'
+            }
+        });
+        res.json(lastEp)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
 module.exports = {
-    newEpisode
+    newEpisode,
+    getEpByCartoonID
 }

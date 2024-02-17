@@ -6,7 +6,7 @@ const upload = require('./lib/upload');
 
 const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator} = require('./Controllers/users');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp} = require('./Controllers/cartoon');
-const { newEpisode} = require('./Controllers/episode');
+const { newEpisode, getEpByCartoonID} = require('./Controllers/episode');
 const { getAllComment,insertComment} = require('./Controllers/comment');
 const { webhook, checkout  } = require('./Controllers/payment');
 // Import your middleware here
@@ -46,6 +46,7 @@ router.get('/getImageEp/:epId',getImageEp)
 //Comment
 router.get('/comments',getAllComment)
 router.post('/insertcomment',insertComment)
+router.get('/getlastep/:cartoonid',getEpByCartoonID)
 
 //payment
 router.post('/webhook',express.raw({type: "application/json"}), webhook)
