@@ -17,8 +17,8 @@ const insertComment = async (req, res) => {
         const newComment = await db.comment.create({
             data:{
                 content : comment.content,
-                userId: comment.userId,
-                episodeId : comment.episodeId,
+                userId: Number(comment.userId),
+                episodeId : Number(comment.episodeId),
             }
         });
         res.json(newComment);

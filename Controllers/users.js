@@ -117,12 +117,13 @@ const updateProfile = async(req,res)=>{
     const update_id = req.params.id
     const info = req.body
     if(!update_id){
-        res.status(400).json(error);
+        res.status(400).json({error,"success":0});
     }
     try{
-       
-        const users = await db.user.update(
-
+        if(info.email == "" && info.name == ""){
+            res.status(401).json({error,"success":0})
+        }else{
+        const updateusers = await db.user.update(
             {
                 where:{
                     id:Number(update_id)
@@ -131,14 +132,13 @@ const updateProfile = async(req,res)=>{
                 data:{
                     email:info.email,
                     name:info.name,
-                    password:info.password,
-                    phone:info.phone
                 }
             }
         )
-        res.json(users)
+        res.json({updateusers,"success":1})
+    }
     }catch(error){
-        res.status(400).json(error);
+        res.status(400).json({error,"success":0});
     }
 }
 
