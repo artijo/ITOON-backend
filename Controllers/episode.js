@@ -1,15 +1,13 @@
 const db = require('../lib/prisma');
 
 const newEpisode = async (req, res) => {
-    req.files.images.map(file => {
-        console.log(file)
-    })
-    const { title } = req.body;
+    const { title, cartoonid } = req.body;
+    console.log(cartoonid)
     try {
         const newEP = await db.episode.create({
             data: {
                 name: title,
-                cartoonId: 1000,
+                cartoonId: Number(cartoonid),
                 episodeNumber: 1,
                 thumbnail: req.files.cover[0].path,
                 releaseDate: new Date(),
