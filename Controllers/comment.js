@@ -3,8 +3,16 @@ const db = require('../lib/prisma');
 const getAllComment = async(req,res) => {
     try{
         const commentList = await db.comment.findMany({
+            include:{
+                episode : {
+                    select : {
+                        episodeNumber:true
+                    }
+                }
+            }
         })
         res.json(commentList)
+        console.log(commentList)
     }catch(error){
         res.json(error)
     }
