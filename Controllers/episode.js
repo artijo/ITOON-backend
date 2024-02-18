@@ -24,6 +24,7 @@ const newEpisode = async (req, res) => {
         });
         res.json(newEP)
     } catch (error) {
+        console.log(error);
         res.json(error)
     }
 }

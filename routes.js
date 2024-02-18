@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('./lib/upload');
+const {uploadr2} = require('./lib/r2');
 
 // Import your controllers here
 
@@ -41,6 +42,7 @@ router.get('/allgenre',getAllGenre)
 router.get('/searchCartoon/:name',searchCartoon)
 // Episode
 router.post('/newEpisode',checkLoginWeb,isCreator,upload.fields([{name:'cover'},{name:'images'}]), newEpisode);
+// router.post('/newEpisode',checkLoginWeb,isCreator,uploadr2.fields([{name:'cover'},{name:'images'}]), newEpisode);
 router.get('/getImageEp/:epId',getImageEp)
 
 //Comment
