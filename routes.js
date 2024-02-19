@@ -4,7 +4,7 @@ const upload = require('./lib/upload');
 const {uploadr2} = require('./lib/r2');
 
 // Import your controllers here
-const { getHistory} = require('./Controllers/history');
+const { getHistory,chechistory} = require('./Controllers/history');
 const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator} = require('./Controllers/users');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon} = require('./Controllers/cartoon');
 const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
@@ -61,4 +61,5 @@ router.post('/checkout',checkout)
 
 //history
 router.get('/allhistory/:uid',getHistory)
+router.post('/edithistory/:uid/:cid/:epnum',chechistory)
 module.exports = router;
