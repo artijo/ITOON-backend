@@ -113,6 +113,30 @@ const uploadGartoon = async (req,res) => {
     }
 }
 
+const updateCartoon = async (req,res) => {
+    const {cartoonid} = req.params
+    console.log(cartoonid)
+    const {name,description, episode, type} = req.body
+    try{
+        const updateCartoon = await db.cartoon.update({
+            where:{
+                id:Number(cartoonid)
+            },
+            data:{
+                name,
+                description,
+                totalEpisodes: Number(episode),
+                genreId: Number(type),
+                thumbnail: req.file.path
+            }
+        })
+        res.json(updateCartoon)
+    }catch(error){
+        console.log(error)
+        res.status(500).json(error)
+    }
+}
+
 const getEpCartoon = async (req,res) => {
     try{
         const {cartoonid} = req.params
@@ -179,5 +203,6 @@ module.exports = {
     getEpCartoon,
     getAllGenre,
     searchCartoon,
-    getImageEp
+    getImageEp,
+    updateCartoon
 }

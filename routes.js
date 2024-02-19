@@ -6,7 +6,7 @@ const {uploadr2} = require('./lib/r2');
 // Import your controllers here
 
 const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator} = require('./Controllers/users');
-const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp} = require('./Controllers/cartoon');
+const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon} = require('./Controllers/cartoon');
 const { newEpisode, getEpByCartoonID} = require('./Controllers/episode');
 const { getAllComment,insertComment} = require('./Controllers/comment');
 const { webhook, checkout  } = require('./Controllers/payment');
@@ -22,8 +22,10 @@ router.get('/users/:id',getUserbyID)
 router.post('/loginweb', loginWeb)
 router.post('/authcheckweb', checkLoginWeb, (req, res) => {
     res.json({ status:'ok',message: 'Authorized' });
-}
-);
+});
+router.post('/authcheckcreator', checkLoginWeb, isCreator, (req, res) => {
+    res.json({ status:'ok',message: 'Authorized' });
+});
 router.get('/users/:email/:password',loginApp)
 router.put('/profile/:id',updateProfile)
 router.post('/users/creator/',insertCreator)
@@ -36,6 +38,7 @@ router.post('/signUp', insertUser);
 router.post('/login',checkLogin)
 router.get('/getRecByGenre/:genreid', getRecByGenre)
 router.get('/Cartoon/:cartoonid',getCartoon)
+router.put('/Cartoon/:cartoonid',checkLoginWeb, isCreator, upload.single('thumbnail'),updateCartoon)
 router.get('/getAllEpCartoon/:cartoonid',getEpCartoon)
 router.post('/newcartoon',checkLoginWeb, isCreator, upload.single('thumbnail'), uploadGartoon);
 router.get('/allgenre',getAllGenre)
