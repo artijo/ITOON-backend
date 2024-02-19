@@ -115,7 +115,6 @@ const uploadGartoon = async (req,res) => {
 
 const updateCartoon = async (req,res) => {
     const {cartoonid} = req.params
-    console.log(cartoonid)
     const {name,description, episode, type} = req.body
     try{
         const updateCartoon = await db.cartoon.update({
