@@ -88,7 +88,6 @@ const insertComment = async (req, res) => {
 };
 
 module.exports = {
-    getAllComment,
     insertComment,
     getEpcomment
 }

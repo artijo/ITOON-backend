@@ -7,8 +7,8 @@ const {uploadr2} = require('./lib/r2');
 
 const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator} = require('./Controllers/users');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon} = require('./Controllers/cartoon');
-const { newEpisode, getEpByCartoonID, updateEpisode} = require('./Controllers/episode');
-const { getAllComment,insertComment, getEpcomment} = require('./Controllers/comment');
+const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
+const {insertComment, getEpcomment} = require('./Controllers/comment');
 const { webhook, checkout  } = require('./Controllers/payment');
 // Import your middleware here
 const { checkLogin,checkLoginWeb, isCreator } = require('./Middlewares/auth');
@@ -48,6 +48,7 @@ router.post('/newEpisode',checkLoginWeb,isCreator,upload.fields([{name:'cover'},
 // router.post('/newEpisode',checkLoginWeb,isCreator,uploadr2.fields([{name:'cover'},{name:'images'}]), newEpisode);
 router.put('/updateEpisode/:episodeid',checkLoginWeb,isCreator,upload.fields([{name:'cover'},{name:'images'}]),updateEpisode)
 router.get('/getImageEp/:epId',getImageEp)
+router.get('/getEpbyID/:episodeid',getEpbyID)
 
 //Comment
 router.get('/comments/:cid/:eid',getEpcomment)
