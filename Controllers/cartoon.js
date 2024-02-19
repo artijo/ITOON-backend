@@ -93,14 +93,14 @@ const uploadGartoon = async (req,res) => {
     //     }
     // })
     try{
-        const {name,description, episode, type} = req.body
+        const {name,description, type} = req.body
         const newCartoon = await db.cartoon.create({
             data:{
                 name,
                 description,
                 releaseDate: new Date(),
                 thumbnail: req.file.path,
-                totalEpisodes: Number(episode),
+                totalEpisodes: 0,
                 creatorId: req.creatorId,
                 genreId: Number(type)
             }
