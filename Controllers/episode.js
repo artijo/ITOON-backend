@@ -40,7 +40,7 @@ const updateEpisode = async (req, res) => {
             data: {
                 name: title,
                 episodeNumber: Number(episode),
-                thumbnail: req.file.path
+                thumbnail: req.files.cover[0].path
             }
         })
         const deleteImage = await db.image.deleteMany({
@@ -83,8 +83,27 @@ const getEpByCartoonID = async (req, res) => {
     }
 }
 
+const getEpbyID = async (req, res) => {
+    const { episodeid } = req.params;
+    try {
+        const ep = await db.episode.findUnique({
+            where: {
+                id: Number(episodeid)
+            },
+            include: {
+                images: true
+            }
+        });
+        res.json(ep)
+    } catch (error) {
+        console.log(error);
+        res.json(error)
+    }
+}
+
 module.exports = {
     newEpisode,
     getEpByCartoonID,
-    updateEpisode
+    updateEpisode,
+    getEpbyID
 }
