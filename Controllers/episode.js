@@ -29,6 +29,42 @@ const newEpisode = async (req, res) => {
     }
 }
 
+const updateEpisode = async (req, res) => {
+    const { episodeid } = req.params;
+    const { title, episode } = req.body;
+    try {
+        const updateEP = await db.episode.update({
+            where: {
+                id: Number(episodeid)
+            },
+            data: {
+                name: title,
+                episodeNumber: Number(episode),
+                thumbnail: req.file.path
+            }
+        })
+        const deleteImage = await db.image.deleteMany({
+            where: {
+                episodeId: Number(episodeid)
+            }
+        });
+        const newImage = await db.image.createMany({
+            data: req.files.images.map((file,index) => {
+                return {
+                    url: file.path,
+                    episodeId: updateEP.id,
+                    name: file.originalname.split('.')[0],
+                    page: index+1
+                };
+            })
+        });
+        res.json(updateEP)
+    } catch (error) {
+        console.log(error);
+        res.json(error)
+    }
+}
+
 const getEpByCartoonID = async (req, res) => {
     const { cartoonid } = req.params;
     //getlastep
@@ -49,5 +85,6 @@ const getEpByCartoonID = async (req, res) => {
 
 module.exports = {
     newEpisode,
-    getEpByCartoonID
+    getEpByCartoonID,
+    updateEpisode
 }
