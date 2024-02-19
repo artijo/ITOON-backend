@@ -107,6 +107,7 @@ const uploadGartoon = async (req,res) => {
                 genreId: Number(type)
             }
         })
+        console.log(newCartoon.createdAt)
         res.json(newCartoon)
     }
     catch(error){
