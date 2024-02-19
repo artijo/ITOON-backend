@@ -1,5 +1,7 @@
+const { join } = require('@prisma/client/runtime/library');
 const db = require('../lib/prisma');
 const upload = require('../lib/upload');
+const { on } = require('nodemon');
 
 
 const getAllCartoon = async(req,res) => {
@@ -166,8 +168,27 @@ const searchCartoon = async (req,res) => {
     const sfind = "%"+find+"%"
     console.log(find)
     try{
-        const result = await db.$queryRaw`SELECT * FROM cartoon WHERE name LIKE ${sfind}  `;
-        console.log(result)
+        // const result = await db.$queryRaw`SELECT * FROM cartoon JOIN genre ON cartoon.genreId = genre.id 
+        // JOIN creator ON cartoon.creatorId = creator.id JOIN user ON creator.userId = user.id  WHERE cartoon.name LIKE ${sfind}
+        //   `;   
+        // const getgenre = getGenreByid(result.id)
+
+        // // console.log(getall)
+        const result = await db.cartoon.findMany({
+            where:{
+                name:{
+                    contains:find
+                }
+            },
+            include:{
+                genres:true,
+                creator:{
+                    include:{
+                        user:true
+                    }
+                }
+            }
+        })
         res.json(result)
     }catch(error){
         res.json(error)
