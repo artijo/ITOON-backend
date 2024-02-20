@@ -61,5 +61,5 @@ router.post('/checkout',checkout)
 
 //history
 router.get('/allhistory/:uid',getHistory)
-router.post('/edithistory/:uid/:cid/:epnum',chechistory)
+router.get('/edithistory/:uid/:cid/:epnum',chechistory)
 module.exports = router;

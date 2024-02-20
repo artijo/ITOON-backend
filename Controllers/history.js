@@ -23,6 +23,10 @@ const getHistory = async(req, res)=>{
                                 }
                             }
                         },
+                        thumbnail:true,
+                        description:true,
+                        releaseDate:true,
+                        totalEpisodes:true
                     }
                 },
                 user:{
@@ -50,6 +54,7 @@ const chechistory = async (req, res) => {
     const userid = req.params.uid
     const cartoonid = req.params.cid
     const epnum = req.params.epnum
+    console.log(req.params)
     var check = false
     try{
         const datahis = await db.history.findMany(
