@@ -64,7 +64,7 @@ const chechistory = async (req, res) => {
                 }
             }
         )
-      
+
         const findcartoonep = await db.episode.findMany(
             {
                 where:{
@@ -76,32 +76,52 @@ const chechistory = async (req, res) => {
                 }
             }
         )
-        
-        if(datahis[0].episode.episodeNumber >= epnum){
-            console.log("don't change episode number")
-        }else{
-            console.log("change episode")
-            check = true
-        }
-        
-        if (check) {
+        console.log(datahis.length)
+        if(datahis.length===0){
             try{
-                const updatehisfun = await db.history.update({
-                    where: {
-                        id:datahis[0].id
-                    },
+                const inserthisfun = await db.history.create({
                     data:{
-                        viewDate:new Date(),
-                        episodeId:findcartoonep[0].id
+                        userId:parseInt(userid),
+                        cartoonId:parseInt(cartoonid),
+                        episodeId:findcartoonep[0].id,
+                        viewDate:new Date()
                     }
                 })
-                res.json(updatehisfun)
+                res.json(inserthisfun)
             }catch(error){
-                res.json(error)
+                res.json("error e sus")
             }
+            
         }else{
-            res.status(200).json("success")
+            
+            
+            if(datahis[0].episode.episodeNumber >= epnum){
+                console.log("don't change episode number")
+            }else{
+                console.log("change episode")
+                check = true
+            }
+            
+            if (check) {
+                try{
+                    const updatehisfun = await db.history.update({
+                        where: {
+                            id:datahis[0].id
+                        },
+                        data:{
+                            viewDate:new Date(),
+                            episodeId:findcartoonep[0].id
+                        }
+                    })
+                    res.json(updatehisfun)
+                }catch(error){
+                    res.json(error)
+                }
+            }else{
+                res.status(200).json("success")
+            }
         }
+        
         
     }catch(error){
         res.status(500).json(error)
