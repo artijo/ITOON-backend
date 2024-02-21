@@ -29,6 +29,7 @@ const getHistory = async(req, res)=>{
                 episode:{
                     select:{
                         episodeNumber:true,
+                        name:true
                     }
                 }
             }
