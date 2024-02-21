@@ -12,21 +12,13 @@ const getHistory = async(req, res)=>{
             },
             include:{
                 cartoon:{
-                    select:{
-                        name:true,
+                    include:{
+                        genres:true,
                         creator:{
-                            select:{
-                                user:{
-                                    select:{
-                                        name:true
-                                    }
-                                }
+                            include:{
+                                user:true
                             }
-                        },
-                        thumbnail:true,
-                        description:true,
-                        releaseDate:true,
-                        totalEpisodes:true
+                        }
                     }
                 },
                 user:{
