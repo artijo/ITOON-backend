@@ -1,6 +1,7 @@
 const db = require('../lib/prisma');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const prisma = require('../lib/prisma');
 
 const getallUsers = async (req, res) => {
     try {
@@ -171,6 +172,70 @@ const insertCreator = async(req,res)=>{
 }
 
 
+const isFav = async(req,res) => {
+    const id = req.params.id;
+    const cId = req.params.cartoonId;
+    try{
+        const isFav = await db.favoriteCartoon.findFirst({
+            where:{
+                userId:Number(id),
+                cartoonId:Number(cId)
+            }
+        })
+        if(!isFav){
+            return res.json({message:0})
+        }else{
+            return res.json({message:1})
+        }
+        
+    }catch(error){
+        return res.status(500).json(error)
+    }
+}
+
+
+const insertFav = async(req,res) => {
+    const id = req.params.id;
+    const cId = req.params.cartoonId;
+    const data_now  = new Date();
+    try{
+        await prisma.favoriteCartoon.create({
+            data:{
+                userId:Number(id),
+                cartoonId:Number(cId),
+                favoriteDate:data_now
+            }
+        })
+        res.json({message:1})
+    }catch(error){
+        res.status(500).json(error)
+    }
+}
+
+const unFav = async(req,res) => {
+    const id = req.params.id;
+    const cId = req.params.cartoonId;
+    try{
+        // QQ for primary key
+
+        const fav = await db.favoriteCartoon.findFirst({
+            where:{
+                userId:Number(id),
+                cartoonId:Number(cId)
+            }
+        })
+
+        await db.favoriteCartoon.delete({
+            where:{
+                id:Number(fav.id) //use primary key for delete
+            }
+        })
+        res.json({message:0})
+    }catch(error){
+        res.status(500).json(error)
+    }
+}
+
 
 module.exports = {
     getallUsers,
@@ -179,5 +244,8 @@ module.exports = {
     loginWeb,
     loginApp,
     updateProfile,
-    insertCreator
+    insertCreator,
+    insertFav,
+    unFav,
+    isFav
 }

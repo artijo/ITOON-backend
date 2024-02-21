@@ -5,7 +5,7 @@ const {uploadr2} = require('./lib/r2');
 
 // Import your controllers here
 const { getHistory,chechistory} = require('./Controllers/history');
-const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator} = require('./Controllers/users');
+const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav} = require('./Controllers/users');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon} = require('./Controllers/cartoon');
 const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
 const {insertComment, getEpcomment} = require('./Controllers/comment');
@@ -62,4 +62,12 @@ router.post('/checkout',checkout)
 //history
 router.get('/allhistory/:uid',getHistory)
 router.get('/edithistory/:uid/:cid/:epnum',chechistory)
+
+
+// Fav
+router.get('/fav/:id/:cartoonId', isFav)
+router.get('/favInsert/:id/:cartoonId', insertFav)
+router.delete('/fav/:id/:cartoonId', unFav)
+
+
 module.exports = router;
