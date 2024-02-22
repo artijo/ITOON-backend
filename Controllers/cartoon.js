@@ -241,6 +241,56 @@ const boughtCartoon = async (req,res) => {
     }
 }
 
+const buyCartoon = async (req,res) => {
+    const {cartoonid, userId} = req.body
+    try{
+        const getusercoin = await db.user.findUnique({
+            where:{
+                id: Number(userId)
+            }
+        })
+        const getcartoonprice = await db.cartoon.findUnique({
+            where:{
+                id: Number(cartoonid)
+            }
+        })
+        if(getusercoin.coin < getcartoonprice.price){
+            res.json({status:'no',message:'not enough coin'})
+        }
+        else{
+            const bought = await db.buyCartoon.create({
+                data:{
+                    userId: Number(userId),
+                    cartoonId: Number(cartoonid)
+                }
+            })
+            const updatecoin = await db.user.update({
+                where:{
+                    id: Number(userId)
+                },
+                data:{
+                    coin:{
+                        decrement: getcartoonprice.price
+                    }
+                }
+            })
+            const coinTransaction = await db.coinTransaction.create({
+                data:{
+                    userId: Number(userId),
+                    amount: getcartoonprice.price,
+                    purchasename: "Buy Cartoon "+getcartoonprice.name,
+                    date: new Date(),
+                    status: "complete"
+                }
+            })
+            res.json({status:'ok',message:'bought'})
+        }
+    }catch(error){
+        console.log(error)
+        res.status(500).json(error)
+    }
+}
+
 module.exports = {
     getAllCartoon,
     getRecAll,
@@ -252,5 +302,6 @@ module.exports = {
     searchCartoon,
     getImageEp,
     updateCartoon,
-    boughtCartoon
+    boughtCartoon,
+    buyCartoon
 }
