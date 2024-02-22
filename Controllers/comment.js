@@ -1,42 +1,6 @@
 const { log } = require('console');
 const db = require('../lib/prisma');
 
-// const getAllComment = async(req,res) => {
-//     const findepid = req.params.episodeNumber
-//     const findcartoon = req.params.cartoonId
-//     console.log(findepid)
-//     console.log(findcartoon)
-//     try{
-//         const commentList = await db.comment.findMany({
-//             include:{
-//                 episode : {
-//                     select : {
-//                         episodeNumber:true,
-//                         cartoonId:true
-//                     }
-//                 }             
-//             }
-//         })
-//         // console.log(commentList)
-//         for(var i=0;i<=commentList.length;i++){
-//             var data = commentList[i]
-//             // console.log(data.episode.episodeNumber)
-//             // var querycom = ""
-//             console.log(data)
-//             const cartoonlist = await db.$queryRaw`SELECT name FROM cartoon WHERE id = ${data.episode.cartoonId}`
-//             if(data.episode.episodeNumber==find){
-//                 const comment = await db.$queryRaw`SELECT * FROM comment WHERE episodeId = ${data.episodeId}`
-//                 console.log(comment)
-//             }
-//             console.log(cartoonlist)
-//         }
-//         console.log(cartoonlist)
-//         res.json(reslut)
-//         // console.log(reslut)
-//     }catch(error){
-//         res.json(error)
-//     }
-// }
 
 const getEpcomment = async(req,res) => {
     const cartoonid = req.params.cid
@@ -59,8 +23,41 @@ const getEpcomment = async(req,res) => {
                                 }
                             }
                         }
+                    } 
+                },
+                user:true
+            }
+    })
+    console.log(comment)
+    res.json(comment)
+    }catch(error){
+        res.status(500).json(error)
+    }
+}
+
+const getUsercomment = async(req,res) => {
+    const userid = req.params.uid
+    try{
+        const comment = await db.comment.findMany({
+            where:{
+                userId:parseInt(userid)
+            },
+            include:{
+                episode:{
+                    include:{
+                        cartoon:{
+                            include:{
+                                genres:true,
+                                creator:{
+                                    include:{
+                                        user:true
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                user:true
             }
     })
     console.log(comment)
@@ -89,5 +86,6 @@ const insertComment = async (req, res) => {
 
 module.exports = {
     insertComment,
-    getEpcomment
+    getEpcomment,
+    getUsercomment
 }

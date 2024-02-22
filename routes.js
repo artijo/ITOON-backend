@@ -8,7 +8,7 @@ const { getHistory,chechistory} = require('./Controllers/history');
 const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav, showFav} = require('./Controllers/users');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon} = require('./Controllers/cartoon');
 const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
-const {insertComment, getEpcomment} = require('./Controllers/comment');
+const {insertComment, getEpcomment, getUsercomment} = require('./Controllers/comment');
 const { webhook, checkout  } = require('./Controllers/payment');
 // Import your middleware here
 const { checkLogin,checkLoginWeb, isCreator } = require('./Middlewares/auth');
@@ -53,6 +53,7 @@ router.get('/getEpbyID/:episodeid',getEpbyID)
 
 //Comment
 router.get('/comments/:cid/:eid',getEpcomment)
+router.get('/usercomment/:uid',getUsercomment)
 router.post('/insertcomment',insertComment)
 router.get('/getlastep/:cartoonid',getEpByCartoonID)
 
