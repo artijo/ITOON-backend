@@ -213,7 +213,33 @@ const getImageEp = async (req,res) =>{
     }catch(error){
         res.status(500).json(error)
     }
-} 
+}
+
+const boughtCartoon = async (req,res) => {
+    const {cartoonid, userId} = req.params
+    try{
+        const bought = await db.buyCartoon.findFirst({
+            where:{
+                AND:[
+                    {
+                        userId: Number(userId)
+                    },
+                    {
+                        cartoonId: Number(cartoonid)
+                    }
+                ]
+            }
+        })
+        if(bought){
+            res.json({status:'ok',message:'bought'})
+        }
+        else{
+            res.json({status:'no',message:'not bought'})
+        }
+    }catch(error){
+        res.status(500).json(error)
+    }
+}
 
 module.exports = {
     getAllCartoon,
@@ -225,5 +251,6 @@ module.exports = {
     getAllGenre,
     searchCartoon,
     getImageEp,
-    updateCartoon
+    updateCartoon,
+    boughtCartoon
 }

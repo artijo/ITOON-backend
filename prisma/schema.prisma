@@ -21,7 +21,7 @@ model User {
   creator   Creator?
   comments  Comment[]
   reviews   Review[]
-  buyEpisodes buyEpisode[]
+  buyCartoon buyCartoon[]
   favoriteCartoons favoriteCartoon[]
   histories history[]
   coinTransactions CoinTransaction[]
@@ -53,9 +53,11 @@ model Cartoon {
   genreId  Int
   genres   Genre  @relation(fields: [genreId], references: [id])
   reviews  Review[]
-  buyEpisodes buyEpisode[]
+  buyEpisodes buyCartoon[]
   favoriteCartoons favoriteCartoon[]
   histories history[]
+  paid Boolean @default(false)
+  price Int?  @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
@@ -71,7 +73,6 @@ model Episode {
   cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
   images  Image[]
   comments  Comment[]
-  buyEpisodes buyEpisode[]
   histories history[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -123,12 +124,10 @@ model Review {
   deletedAt DateTime?
 }
 
-model buyEpisode {
+model buyCartoon {
   id        Int      @id @default(autoincrement())
   userId    Int
   user   User  @relation(fields: [userId], references: [id])
-  episodeId    Int
-  episode   Episode  @relation(fields: [episodeId], references: [id])
   cartoonId    Int
   cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
   createdAt DateTime @default(now())

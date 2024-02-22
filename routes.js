@@ -6,7 +6,7 @@ const {uploadr2} = require('./lib/r2');
 // Import your controllers here
 const { getHistory,chechistory} = require('./Controllers/history');
 const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav} = require('./Controllers/users');
-const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon} = require('./Controllers/cartoon');
+const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon} = require('./Controllers/cartoon');
 const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
 const {insertComment, getEpcomment} = require('./Controllers/comment');
 const { webhook, checkout  } = require('./Controllers/payment');
@@ -43,6 +43,7 @@ router.get('/getAllEpCartoon/:cartoonid',getEpCartoon)
 router.post('/newcartoon',checkLoginWeb, isCreator, upload.single('thumbnail'), uploadGartoon);
 router.get('/allgenre',getAllGenre)
 router.get('/searchCartoon/:name',searchCartoon)
+router.get('/boughtCartoon/:cartoonid/:userId',boughtCartoon)
 // Episode
 router.post('/newEpisode',checkLoginWeb,isCreator,upload.fields([{name:'cover'},{name:'images'}]), newEpisode);
 // router.post('/newEpisode',checkLoginWeb,isCreator,uploadr2.fields([{name:'cover'},{name:'images'}]), newEpisode);

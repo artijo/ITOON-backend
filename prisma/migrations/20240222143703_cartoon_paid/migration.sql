@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `cartoon` ADD COLUMN `paid` BOOLEAN NOT NULL DEFAULT false,
+    ADD COLUMN `price` INTEGER NULL DEFAULT 0;
