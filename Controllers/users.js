@@ -237,6 +237,42 @@ const unFav = async(req,res) => {
 }
 
 
+const showFav = async(req,res) => {
+    
+    console.log(req.params)
+    const userId = req.params.uid
+    console.log(userId)
+    try{
+        const showfav = await db.favoriteCartoon.findMany({
+            where:{
+                userId:Number(userId)
+            },
+            orderBy:{
+                favoriteDate:'desc',
+            },
+            include:{
+                cartoon:{
+                    include:{
+                        genres:true,
+                        creator:{
+                            include:{
+                                user:true
+                            }
+                        }
+                    }
+                },
+                user:true
+            }
+        })
+        console.log(showfav)
+        res.json(showfav)
+    }catch(error){
+        res.status(500).json(error)
+    }
+
+
+}
+
 module.exports = {
     getallUsers,
     insertUser,
@@ -247,5 +283,6 @@ module.exports = {
     insertCreator,
     insertFav,
     unFav,
-    isFav
+    isFav,
+    showFav
 }
