@@ -18,6 +18,7 @@ model User {
   password  String
   phone     String?  @unique 
   coin      Int      @default(0)
+  role      String   @default("user")
   creator   Creator?
   comments  Comment[]
   reviews   Review[]

@@ -305,6 +305,39 @@ const getCreator = async(req,res)=>{
     }
 }
 
+const getallCreator = async(req,res)=>{
+    try{
+        const creator = await db.creator.findMany({
+            include:{
+                user:true
+            }
+        })
+        res.json(creator)
+    }
+    catch(error){
+        res.status(500).json(error)
+    }
+}
+
+const appoveCreator = async(req,res)=>{
+    const {userId} = req.params
+    try{
+        const creator = await db.creator.update({
+            where:{
+                userId:Number(userId)
+            },
+            data:{
+                status:"verified"
+            }
+        })
+        res.json(creator)
+    }
+    catch(error){
+        console.log(error)
+        res.status(500).json(error)
+    }
+}
+
 module.exports = {
     getallUsers,
     insertUser,
@@ -318,5 +351,7 @@ module.exports = {
     isFav,
     showFav,
     creatorRegister,
-    getCreator
+    getCreator,
+    getallCreator,
+    appoveCreator
 }

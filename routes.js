@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('./lib/upload');
-const {uploadr2} = require('./lib/r2');
 
 // Import your controllers here
 const { getHistory,chechistory} = require('./Controllers/history');
-const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav, showFav, creatorRegister, getCreator} = require('./Controllers/users');
+const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav, showFav, creatorRegister, getCreator, getallCreator, appoveCreator} = require('./Controllers/users');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon, buyCartoon} = require('./Controllers/cartoon');
 const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
 const {insertComment, getEpcomment, getUsercomment} = require('./Controllers/comment');
 const { webhook, checkout  } = require('./Controllers/payment');
 // Import your middleware here
-const { checkLogin,checkLoginWeb, isCreator } = require('./Middlewares/auth');
+const { checkLogin,checkLoginWeb, isCreator, isAdmin } = require('./Middlewares/auth');
 
 // Define your routes here
 router.get('/', (req, res) => {
@@ -31,6 +30,8 @@ router.put('/profile/:id',updateProfile)
 router.post('/users/creator/',insertCreator)
 router.post('/creator/reg',creatorRegister)
 router.get('/creator/:userId',getCreator)
+router.get('/allcreator',checkLoginWeb, isAdmin,getallCreator)
+router.put('/creator/:userId',checkLoginWeb, isAdmin,appoveCreator)
 
 // Cartoon
 router.get('/allCartoon', getAllCartoon)

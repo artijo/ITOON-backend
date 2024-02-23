@@ -52,10 +52,33 @@ const isCreator = async (req,res,next) => {
         });
         if(!userDetail){
             return res.status(401).json({error:"Unauthorized"});
-        }else if(userDetail.status != "verified"){
+        }
+        if(userDetail.status != "verified"){
             return res.status(401).json({error:"Unauthorized"});
         }
         req.creatorId = userDetail.id;
+        next();
+    } catch(error){
+        res.status(401).json({error:"Unauthorized"});
+    }
+}
+
+const isAdmin = async (req,res,next) => {
+    let token = req.headers.authorization.split(' ')[1];
+    if(!token){
+        return res.status(401).json({error:"Unauthorized"});
+    }
+    try{
+        const user = jwt.verify(token,process.env.JWT_SECRET);
+        const userDetail = await db.user.findUnique({
+            where:{email:user.email}
+        });
+        if(!userDetail){
+            return res.status(401).json({error:"Unauthorized"});
+        }
+        if(userDetail.role != "admin"){
+            return res.status(401).json({error:"Unauthorized"});
+        }
         next();
     } catch(error){
         res.status(401).json({error:"Unauthorized"});
@@ -66,5 +89,6 @@ const isCreator = async (req,res,next) => {
 module.exports = {
     checkLogin,
     checkLoginWeb,
-    isCreator
+    isCreator,
+    isAdmin
 };
