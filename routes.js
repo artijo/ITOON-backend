@@ -5,7 +5,7 @@ const {uploadr2} = require('./lib/r2');
 
 // Import your controllers here
 const { getHistory,chechistory} = require('./Controllers/history');
-const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav, showFav} = require('./Controllers/users');
+const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav, showFav, creatorRegister, getCreator} = require('./Controllers/users');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon, buyCartoon} = require('./Controllers/cartoon');
 const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
 const {insertComment, getEpcomment, getUsercomment} = require('./Controllers/comment');
@@ -29,6 +29,8 @@ router.post('/authcheckcreator', checkLoginWeb, isCreator, (req, res) => {
 router.get('/users/:email/:password',loginApp)
 router.put('/profile/:id',updateProfile)
 router.post('/users/creator/',insertCreator)
+router.post('/creator/reg',creatorRegister)
+router.get('/creator/:userId',getCreator)
 
 // Cartoon
 router.get('/allCartoon', getAllCartoon)

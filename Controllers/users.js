@@ -273,6 +273,38 @@ const showFav = async(req,res) => {
 
 }
 
+const creatorRegister = async(req,res)=>{
+    const {userId} = req.body
+    try{
+        const creator = await db.creator.create({
+            data:{
+                userId:Number(userId)
+            }
+        })
+        res.json(creator)
+}catch(error){
+    res.status(500).json(error)
+}
+}
+
+const getCreator = async(req,res)=>{
+    const {userId} = req.params
+    try{
+        const creator = await db.creator.findFirst({
+            where:{
+                userId:Number(userId)
+            },
+            include:{
+                user:true
+            }
+        })
+        res.json(creator)
+    }
+    catch(error){
+        res.status(500).json(error)
+    }
+}
+
 module.exports = {
     getallUsers,
     insertUser,
@@ -284,5 +316,7 @@ module.exports = {
     insertFav,
     unFav,
     isFav,
-    showFav
+    showFav,
+    creatorRegister,
+    getCreator
 }
