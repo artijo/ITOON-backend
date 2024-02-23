@@ -95,7 +95,10 @@ const uploadGartoon = async (req,res) => {
     //     }
     // })
     try{
-        const {name,description, type} = req.body
+        let {name,description, type, paid, price} = req.body
+        console.log(paid)
+        if(paid == 'true') paid = true; else paid = false;
+    
         const newCartoon = await db.cartoon.create({
             data:{
                 name,
@@ -104,7 +107,9 @@ const uploadGartoon = async (req,res) => {
                 thumbnail: req.file.path,
                 totalEpisodes: 0,
                 creatorId: req.creatorId,
-                genreId: Number(type)
+                genreId: Number(type),
+                paid: paid,
+                price: Number(price)
             }
         })
         console.log(newCartoon.createdAt)
@@ -118,7 +123,8 @@ const uploadGartoon = async (req,res) => {
 
 const updateCartoon = async (req,res) => {
     const {cartoonid} = req.params
-    const {name,description, episode, type} = req.body
+    let {name,description, episode, type, paid, price} = req.body
+    if(paid == 'true') paid = true; else paid = false;
     try{
         const updateCartoon = await db.cartoon.update({
             where:{
@@ -129,7 +135,9 @@ const updateCartoon = async (req,res) => {
                 description,
                 totalEpisodes: Number(episode),
                 genreId: Number(type),
-                thumbnail: req.file.path
+                thumbnail: req.file.path,
+                paid: paid,
+                price: Number(price)
             }
         })
         res.json(updateCartoon)
