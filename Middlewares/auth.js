@@ -52,6 +52,8 @@ const isCreator = async (req,res,next) => {
         });
         if(!userDetail){
             return res.status(401).json({error:"Unauthorized"});
+        }else if(userDetail.status != "verified"){
+            return res.status(401).json({error:"Unauthorized"});
         }
         req.creatorId = userDetail.id;
         next();
