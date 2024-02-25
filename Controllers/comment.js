@@ -28,7 +28,6 @@ const getEpcomment = async(req,res) => {
                 user:true
             }
     })
-    console.log(comment)
     res.json(comment)
     }catch(error){
         res.status(500).json(error)
