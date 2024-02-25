@@ -77,7 +77,7 @@ const chechistory = async (req, res) => {
                 }
             }
         )
-        console.log(datahis.length)
+        // console.log(datahis.length)
         if(datahis.length===0){
             try{
                 const inserthisfun = await db.history.create({
@@ -97,9 +97,9 @@ const chechistory = async (req, res) => {
             
             
             if(datahis[0].episode.episodeNumber >= epnum){
-                console.log("don't change episode number")
+                // console.log("don't change episode number")
             }else{
-                console.log("change episode")
+                // console.log("change episode")
                 check = true
             }
             

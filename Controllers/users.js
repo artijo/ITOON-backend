@@ -238,10 +238,7 @@ const unFav = async(req,res) => {
 
 
 const showFav = async(req,res) => {
-    
-    console.log(req.params)
     const userId = req.params.uid
-    console.log(userId)
     try{
         const showfav = await db.favoriteCartoon.findMany({
             where:{
@@ -264,7 +261,7 @@ const showFav = async(req,res) => {
                 user:true
             }
         })
-        console.log(showfav)
+        // console.log(showfav)
         res.json(showfav)
     }catch(error){
         res.status(500).json(error)

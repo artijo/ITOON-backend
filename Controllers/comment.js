@@ -59,7 +59,6 @@ const getUsercomment = async(req,res) => {
                 user:true
             }
     })
-    console.log(comment)
     res.json(comment)
     }catch(error){
         res.status(500).json(error)
@@ -68,7 +67,6 @@ const getUsercomment = async(req,res) => {
 
 const insertComment = async (req, res) => {
     const comment = req.body;
-    console.log(comment)
     try {
         const newComment = await db.comment.create({
             data:{

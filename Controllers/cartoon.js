@@ -54,7 +54,6 @@ const getAllGenre = async(req,res) => {
 
 const getRecByGenre = async(req, res) => {
     const  { genreid }  = req.params
-    console.log(genreid)
     try{
         const cartoonList = await db.cartoon.findMany({
             where:{
@@ -96,7 +95,6 @@ const uploadGartoon = async (req,res) => {
     // })
     try{
         let {name,description, type, paid, price} = req.body
-        console.log(paid)
         if(paid == 'true') paid = true; else paid = false;
     
         const newCartoon = await db.cartoon.create({
@@ -112,7 +110,6 @@ const uploadGartoon = async (req,res) => {
                 price: Number(price)
             }
         })
-        console.log(newCartoon.createdAt)
         res.json(newCartoon)
     }
     catch(error){
@@ -175,7 +172,6 @@ const getEpCartoon = async (req,res) => {
 const searchCartoon = async (req,res) => {
     const find = req.params.name
     const sfind = "%"+find+"%"
-    console.log(find)
     try{
         // const result = await db.$queryRaw`SELECT * FROM cartoon JOIN genre ON cartoon.genreId = genre.id 
         // JOIN creator ON cartoon.creatorId = creator.id JOIN user ON creator.userId = user.id  WHERE cartoon.name LIKE ${sfind}
