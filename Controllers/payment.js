@@ -66,9 +66,7 @@ const webhook = async (request, response) => {
 
 const checkout = async (req, res) => {
   const { product, information } = req.body;
-  console.log("product", product);
   const token = req.headers.authorization.split(" ")[1];
-  console.log("token", token);
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   const user = await db.user.findUnique({
     where: {
