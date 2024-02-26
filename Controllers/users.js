@@ -261,7 +261,6 @@ const showFav = async(req,res) => {
                 user:true
             }
         })
-        // console.log(showfav)
         res.json(showfav)
     }catch(error){
         res.status(500).json(error)
