@@ -295,36 +295,26 @@ const buyCartoon = async (req,res) => {
     }
 }
 
-const getBuyCartoon = async (req, res) => {
-    const { cartoonId, userId } = req.params;
-    try {
-        const cartoon = await db.buyCartoon.findMany({
-            where: {
-                AND: [
-                    { userId: Number(userId) },
-                    { cartoonId: Number(cartoonId) }
-                ]
+const getBoughtCartoon = async(req,res) =>{
+    const userid = req.params.uid
+    try{
+        const cartoonbought = await db.buyCartoon.findMany({
+            where:{
+                userId: parseInt(userid) 
             },
-            include: {
-                user: true,
-                cartoon:{
-                    include:{
-                        genres:true,
-                        creator:{
-                            include:{
-                                user:true
-                            }
-                        }
-                    }
-                }
+            include:{
+                user:true
+            },
+            include:{
+                cartoon:true
             }
         });
-        console.log(cartoon)
-        res.json(cartoon);
-    } catch (error) {
-        res.status(500).json(error);
+        res.json(cartoonbought);
+    }catch(error){
+        res.status(400).json(error)
     }
 }
+
 
 module.exports = {
     getAllCartoon,
@@ -339,5 +329,5 @@ module.exports = {
     updateCartoon,
     boughtCartoon,
     buyCartoon,
-    getBuyCartoon 
+    getBoughtCartoon
 }
