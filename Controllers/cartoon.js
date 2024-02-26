@@ -295,6 +295,37 @@ const buyCartoon = async (req,res) => {
     }
 }
 
+const getBuyCartoon = async (req, res) => {
+    const { cartoonId, userId } = req.params;
+    try {
+        const cartoon = await db.buyCartoon.findMany({
+            where: {
+                AND: [
+                    { userId: Number(userId) },
+                    { cartoonId: Number(cartoonId) }
+                ]
+            },
+            include: {
+                user: true,
+                cartoon:{
+                    include:{
+                        genres:true,
+                        creator:{
+                            include:{
+                                user:true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        console.log(cartoon)
+        res.json(cartoon);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
 module.exports = {
     getAllCartoon,
     getRecAll,
@@ -307,5 +338,6 @@ module.exports = {
     getImageEp,
     updateCartoon,
     boughtCartoon,
-    buyCartoon
+    buyCartoon,
+    getBuyCartoon 
 }
