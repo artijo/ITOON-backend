@@ -120,7 +120,7 @@ const uploadGartoon = async (req,res) => {
 
 const updateCartoon = async (req,res) => {
     const {cartoonid} = req.params
-    let {name,description, episode, type, paid, price} = req.body
+    let {name,description, type, paid, price} = req.body
     if(paid == 'true') paid = true; else paid = false;
     try{
         const updateCartoon = await db.cartoon.update({
@@ -130,7 +130,7 @@ const updateCartoon = async (req,res) => {
             data:{
                 name,
                 description,
-                totalEpisodes: Number(episode),
+                totalEpisodes: 0,
                 genreId: Number(type),
                 thumbnail: req.file.path,
                 paid: paid,
