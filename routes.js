@@ -4,13 +4,14 @@ const upload = require('./lib/upload');
 
 // Import your controllers here
 const { getHistory,chechistory} = require('./Controllers/history');
-const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav, showFav, creatorRegister, getCreator, getallCreator, appoveCreator,forgotPassword} = require('./Controllers/users');
+const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav, showFav, creatorRegister, getCreator, getallCreator, appoveCreator,forgotPassword,getUserbyIDWeb} = require('./Controllers/users');
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon, buyCartoon, getBoughtCartoon } = require('./Controllers/cartoon');
 const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
 const {insertComment, getEpcomment, getUsercomment} = require('./Controllers/comment');
 const { webhook, checkout  } = require('./Controllers/payment');
 // Import your middleware here
 const { checkLogin,checkLoginWeb, isCreator, isAdmin } = require('./Middlewares/auth');
+const { creator } = require('./lib/prisma');
 
 // Define your routes here
 router.get('/', (req, res) => {
@@ -23,6 +24,9 @@ router.post('/authcheckweb', checkLoginWeb, (req, res) => {
     res.json({ status:'ok',message: 'Authorized' });
 });
 router.post('/authcheckcreator', checkLoginWeb, isCreator, (req, res) => {
+    res.json({ status:'ok',message: 'Authorized',creatorId:req.creatorId });
+});
+router.post('/authcheckadmin', checkLoginWeb, isAdmin, (req, res) => {
     res.json({ status:'ok',message: 'Authorized' });
 });
 router.get('/users/:email/:password',loginApp)
@@ -33,6 +37,8 @@ router.get('/creator/:userId',getCreator)
 router.get('/allcreator',checkLoginWeb, isAdmin,getallCreator)
 router.put('/creator/:userId',checkLoginWeb, isAdmin,appoveCreator)
 router.put('/forgotpassword',forgotPassword)
+router.get('/user/web',getUserbyIDWeb)
+
 // Cartoon
 router.get('/allCartoon', getAllCartoon)
 router.get('/recCartoon', getRecAll)
@@ -49,6 +55,7 @@ router.get('/searchCartoon/:name',searchCartoon)
 router.get('/boughtCartoon/:cartoonid/:userId',boughtCartoon)
 router.get('/getboughtcartoon/:uid',getBoughtCartoon)
 router.post('/cartoon/buy',buyCartoon)
+router.get('/cartoonbycreator/:creatorid',getCartoonByCreator)
 
 // Episode
 router.post('/newEpisode',checkLoginWeb,isCreator,upload.fields([{name:'cover'},{name:'images'}]), newEpisode);

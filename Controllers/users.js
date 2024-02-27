@@ -334,23 +334,6 @@ const appoveCreator = async(req,res)=>{
     }
 }
 
-const forgotPassword =async(req,res) => {
-    const email = req.body.email
-    const newpass = req.body.password
-    try{
-        const finduser = await db.user.findOne({
-            where:{
-                email:email
-            }
-        })
-        res.json(finduser)
-    }catch(error){
-        res.status(500).json(error)
-    }
-
-
-}
-
 module.exports = {
     getallUsers,
     insertUser,
@@ -366,6 +349,5 @@ module.exports = {
     creatorRegister,
     getCreator,
     getallCreator,
-    appoveCreator,
-    forgotPassword
+    appoveCreator
 }
