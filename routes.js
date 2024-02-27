@@ -5,7 +5,7 @@ const upload = require('./lib/upload');
 // Import your controllers here
 const { getHistory,chechistory} = require('./Controllers/history');
 const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav, showFav, creatorRegister, getCreator, getallCreator, appoveCreator,forgotPassword,getUserbyIDWeb} = require('./Controllers/users');
-const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon, buyCartoon, getBoughtCartoon } = require('./Controllers/cartoon');
+const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon, buyCartoon, getBoughtCartoon, getCartoonByCreator } = require('./Controllers/cartoon');
 const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
 const {insertComment, getEpcomment, getUsercomment} = require('./Controllers/comment');
 const { webhook, checkout  } = require('./Controllers/payment');
