@@ -307,6 +307,12 @@ const getBoughtCartoon = async(req,res) =>{
             },
             include:{
                 cartoon:true
+            },
+            include:{
+                genres:true
+            },
+            include:{
+                creator:true
             }
         });
         res.json(cartoonbought);
