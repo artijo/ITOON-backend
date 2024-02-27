@@ -11,7 +11,6 @@ const {insertComment, getEpcomment, getUsercomment} = require('./Controllers/com
 const { webhook, checkout  } = require('./Controllers/payment');
 // Import your middleware here
 const { checkLogin,checkLoginWeb, isCreator, isAdmin } = require('./Middlewares/auth');
-const { creator } = require('./lib/prisma');
 
 // Define your routes here
 router.get('/', (req, res) => {
