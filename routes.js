@@ -5,13 +5,16 @@ const upload = require('./lib/upload');
 // Import your controllers here
 const { getHistory,chechistory} = require('./Controllers/history');
 const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav, showFav, creatorRegister, getCreator, getallCreator, appoveCreator,forgotPassword,getUserbyIDWeb} = require('./Controllers/users');
+<<<<<<< Updated upstream
 const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon, buyCartoon, getBoughtCartoon, getCartoonByCreator } = require('./Controllers/cartoon');
+=======
+const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon, buyCartoon, getBoughtCartoon,getCartoonByCreator } = require('./Controllers/cartoon');
+>>>>>>> Stashed changes
 const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
 const {insertComment, getEpcomment, getUsercomment} = require('./Controllers/comment');
 const { webhook, checkout  } = require('./Controllers/payment');
 // Import your middleware here
 const { checkLogin,checkLoginWeb, isCreator, isAdmin } = require('./Middlewares/auth');
-const { creator } = require('./lib/prisma');
 
 // Define your routes here
 router.get('/', (req, res) => {
