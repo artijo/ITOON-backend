@@ -315,6 +315,20 @@ const getBoughtCartoon = async(req,res) =>{
     }
 }
 
+const getCartoonByCreator = async(req,res) => {
+    const creatorid = req.params.creatorid
+    try{
+        const cartoonList = await db.cartoon.findMany({
+            where:{
+                creatorId: Number(creatorid)
+            }
+        })
+        res.json(cartoonList)
+    }catch(error){
+        res.json(error)
+    }
+}
+
 
 module.exports = {
     getAllCartoon,
@@ -329,5 +343,6 @@ module.exports = {
     updateCartoon,
     boughtCartoon,
     buyCartoon,
-    getBoughtCartoon
+    getBoughtCartoon,
+    getCartoonByCreator
 }
