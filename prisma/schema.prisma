@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  previewFeatures = ["fullTextSearch", "fullTextIndex", "referentialActions"]
 }
 
 datasource db {
@@ -21,7 +21,6 @@ model User {
   role      String   @default("user")
   creator   Creator?
   comments  Comment[]
-  reviews   Review[]
   buyCartoon buyCartoon[]
   favoriteCartoons favoriteCartoon[]
   histories history[]
@@ -54,7 +53,6 @@ model Cartoon {
   episodes  Episode[]
   genreId  Int
   genres   Genre  @relation(fields: [genreId], references: [id])
-  reviews  Review[]
   buyEpisodes buyCartoon[]
   favoriteCartoons favoriteCartoon[]
   histories history[]
@@ -72,7 +70,7 @@ model Episode {
   releaseDate     DateTime
   thumbnail    String
   cartoonId    Int
-  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id], onDelete: Cascade)
   images  Image[]
   comments  Comment[]
   histories history[]
@@ -96,7 +94,7 @@ model Image {
   name     String
   url     String
   episodeId    Int
-  episode   Episode  @relation(fields: [episodeId], references: [id])
+  episode   Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
@@ -108,19 +106,7 @@ model Comment {
   userId    Int
   user   User  @relation(fields: [userId], references: [id])
   episodeId    Int
-  episode   Episode  @relation(fields: [episodeId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime?
-}
-
-model Review {
-  id        Int      @id @default(autoincrement())
-  rating     Int
-  userId    Int
-  user   User  @relation(fields: [userId], references: [id])
-  cartoonId    Int
-  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  episode   Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
@@ -131,7 +117,7 @@ model buyCartoon {
   userId    Int
   user   User  @relation(fields: [userId], references: [id])
   cartoonId    Int
-  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
@@ -142,9 +128,8 @@ model favoriteCartoon {
   userId    Int
   user   User  @relation(fields: [userId], references: [id])
   cartoonId    Int
-  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id], onDelete: Cascade)
   favoriteDate DateTime
-  Announcement Announcement[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
@@ -155,9 +140,9 @@ model history {
   userId    Int
   user   User  @relation(fields: [userId], references: [id])
   cartoonId    Int
-  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
+  cartoon   Cartoon  @relation(fields: [cartoonId], references: [id], onDelete: Cascade)
   episodeId    Int
-  episode   Episode  @relation(fields: [episodeId], references: [id])
+  episode   Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
   viewDate DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -173,22 +158,6 @@ model CoinTransaction {
   amount    Int
   sessionId String? @unique
   status    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime?
-}
-
-model Announcement {
-  id        Int      @id @default(autoincrement())
-  title    String
-  content    String
-  date DateTime
-  favoriteId    Int
-  favorite   favoriteCartoon  @relation(fields: [favoriteId], references: [id])
-  // cartoonId    Int
-  // cartoon   Cartoon  @relation(fields: [cartoonId], references: [id])
-  // userId    Int
-  // user   User  @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?

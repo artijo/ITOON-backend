@@ -329,6 +329,22 @@ const getCartoonByCreator = async(req,res) => {
     }
 }
 
+const deleteCartoon = async(req,res) => {
+    const {cartoonid} = req.params
+    try{
+        const deleteCartoon = await db.cartoon.delete({
+            where:{
+                id: Number(cartoonid)
+            }
+        })
+        res.json(deleteCartoon)
+       
+    }catch(error){
+        console.log(error)
+        res.status(500).json(error)
+    }
+}
+
 
 module.exports = {
     getAllCartoon,
@@ -344,5 +360,6 @@ module.exports = {
     boughtCartoon,
     buyCartoon,
     getBoughtCartoon,
-    getCartoonByCreator
+    getCartoonByCreator,
+    deleteCartoon
 }

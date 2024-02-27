@@ -5,8 +5,8 @@ const upload = require('./lib/upload');
 // Import your controllers here
 const { getHistory,chechistory} = require('./Controllers/history');
 const { getallUsers, insertUser, loginWeb ,getUserbyID, loginApp ,updateProfile, insertCreator, insertFav, unFav, isFav, showFav, creatorRegister, getCreator, getallCreator, appoveCreator,forgotPassword,getUserbyIDWeb} = require('./Controllers/users');
-const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon, buyCartoon, getBoughtCartoon, getCartoonByCreator } = require('./Controllers/cartoon');
-const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID} = require('./Controllers/episode');
+const { getAllCartoon, getRecAll, getCartoon, getRecByGenre, uploadGartoon, getEpCartoon, getAllGenre,searchCartoon, getImageEp, updateCartoon, boughtCartoon, buyCartoon, getBoughtCartoon, getCartoonByCreator, deleteCartoon } = require('./Controllers/cartoon');
+const { newEpisode, getEpByCartoonID, updateEpisode, getEpbyID, deleteEpisode} = require('./Controllers/episode');
 const {insertComment, getEpcomment, getUsercomment} = require('./Controllers/comment');
 const { webhook, checkout  } = require('./Controllers/payment');
 // Import your middleware here
@@ -56,6 +56,7 @@ router.get('/boughtCartoon/:cartoonid/:userId',boughtCartoon)
 router.get('/getboughtcartoon/:uid',getBoughtCartoon)
 router.post('/cartoon/buy',buyCartoon)
 router.get('/cartoonbycreator/:creatorid',getCartoonByCreator)
+router.delete('/deletecartoon/:cartoonid', checkLoginWeb, isCreator,deleteCartoon)
 
 // Episode
 router.post('/newEpisode',checkLoginWeb,isCreator,upload.fields([{name:'cover'},{name:'images'}]), newEpisode);
@@ -63,6 +64,7 @@ router.post('/newEpisode',checkLoginWeb,isCreator,upload.fields([{name:'cover'},
 router.put('/updateEpisode/:episodeid',checkLoginWeb,isCreator,upload.fields([{name:'cover'},{name:'images'}]),updateEpisode)
 router.get('/getImageEp/:epId',getImageEp)
 router.get('/getEpbyID/:episodeid',getEpbyID)
+router.delete('/deleteEpisode/:episodeid', checkLoginWeb, isCreator ,deleteEpisode)
 
 //Comment
 router.get('/comments/:cid/:eid',getEpcomment)

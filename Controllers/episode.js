@@ -101,9 +101,25 @@ const getEpbyID = async (req, res) => {
     }
 }
 
+const deleteEpisode = async (req, res) => {
+    const { episodeid } = req.params;
+    try {
+        const deleteEp = await db.episode.delete({
+            where: {
+                id: Number(episodeid)
+            }
+        });
+        res.json(deleteEp)
+    } catch (error) {
+        console.log(error);
+        res.json(error)
+    }
+}
+
 module.exports = {
     newEpisode,
     getEpByCartoonID,
     updateEpisode,
-    getEpbyID
+    getEpbyID,
+    deleteEpisode
 }
