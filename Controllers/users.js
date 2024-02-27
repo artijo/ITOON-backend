@@ -351,9 +351,26 @@ const getUserbyIDWeb = async(req,res) => {
         res.json(error);
     }
 }
+
+const findallemail = async(req,res) =>{
+    try{
+        const useremail = await db.user.findMany({
+            select:{
+                email:true
+            }
+        })
+        res.json(useremail)
+    }catch(error){
+        res.json(error);
+    }
+    
+}
+
+
 const forgotPassword =async(req,res) => {
     const email = req.body.email
     const password = req.body.password
+    console.log(req.body)
     const salt = bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS));
     const hash = bcrypt.hashSync(password, salt);
     try{
@@ -362,20 +379,32 @@ const forgotPassword =async(req,res) => {
                 email:email
             }
         })
-        try{
-            const updatepass = await db.user.update({
-                where:{
-                    email:email
-                },
-                data:{
-                    password:hash
+        if(finduser.length===0){
+            return res.json("No user found")
+        }else{
+            console.log(finduser)
+            if(req.body.password.trim()==""){
+                return res.json({message:"Password cannot be empty"})
+            }else{
+                try{
+                    const updatepass = await db.user.update({
+                        where:{
+                            email:email
+                        },
+                        data:{
+                            password:hash
+                        }
+                    })
+                    res.json(updatepass)
+                    console.log("can update password")
+                }catch(error){
+                    console.log("error")
+                    res.json(error)
                 }
-            })
-            res.json(updatepass)
-            console.log("can update password")
-        }catch(error){
-            console.log("error")
+            }
         }
+        
+        
     }catch(error){
         res.json("errrorr")
     }
@@ -400,5 +429,6 @@ module.exports = {
     getallCreator,
     appoveCreator,
     forgotPassword,
-    getUserbyIDWeb
+    getUserbyIDWeb,
+    findallemail
 }
