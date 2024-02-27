@@ -10,6 +10,9 @@ const getEpcomment = async(req,res) => {
             where:{
                 episodeId:parseInt(epid)
             },
+            orderBy:{
+                createdAt:'desc',
+            },
             include:{
                 episode:{
                     include:{
@@ -40,6 +43,9 @@ const getUsercomment = async(req,res) => {
         const comment = await db.comment.findMany({
             where:{
                 userId:parseInt(userid)
+            },
+            orderBy:{
+                createdAt:'desc',
             },
             include:{
                 episode:{
