@@ -334,6 +334,40 @@ const appoveCreator = async(req,res)=>{
     }
 }
 
+const getUserbyIDWeb = async(req,res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if(!decoded){
+        return res.status(401).json({message:"Unauthorized"})
+    }
+    try{
+        const usersId = await db.user.findUnique({
+            where:{
+                id:Number(decoded.id)
+            }
+        })
+        res.json(usersId)  
+    } catch(error){
+        res.json(error);
+    }
+}
+const forgotPassword =async(req,res) => {
+    const email = req.body.email
+    const newpass = req.body.password
+    try{
+        const finduser = await db.user.findOne({
+            where:{
+                email:email
+            }
+        })
+        res.json(finduser)
+    }catch(error){
+        res.status(500).json(error)
+    }
+
+
+}
+
 module.exports = {
     getallUsers,
     insertUser,
@@ -349,5 +383,7 @@ module.exports = {
     creatorRegister,
     getCreator,
     getallCreator,
-    appoveCreator
+    appoveCreator,
+    forgotPassword,
+    getUserbyIDWeb
 }
