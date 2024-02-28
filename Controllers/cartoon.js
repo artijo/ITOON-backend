@@ -350,6 +350,26 @@ const deleteCartoon = async(req,res) => {
     }
 }
 
+const sliderCartoon = async (req, res) => {
+    try {
+        const cartoons = await db.cartoon.findMany({
+            take: 3
+            ,include:{
+                genres:true,
+                creator:{
+                    include:{
+                        user:true
+                    }
+                }
+            }
+        });
+        res.json(cartoons);
+    } catch (error) {
+        console.error("Error fetching cartoons:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 
 module.exports = {
     getAllCartoon,
@@ -366,5 +386,6 @@ module.exports = {
     buyCartoon,
     getBoughtCartoon,
     getCartoonByCreator,
-    deleteCartoon
+    deleteCartoon,
+    sliderCartoon
 }
