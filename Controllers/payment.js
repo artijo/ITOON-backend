@@ -17,7 +17,7 @@ const webhook = async (request, response) => {
       response.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
-    console.log("webhook");
+    // console.log("webhook");
     // Handle the event
     switch (event.type) {
       case "checkout.session.completed":
@@ -53,11 +53,11 @@ const webhook = async (request, response) => {
           response.status(400).json(error);
         }
 
-        console.log('PaymentIntent was successful!');
+        // console.log('PaymentIntent was successful!');
         break;
       // ... handle other event types
       default:
-        console.log(`Unhandled event type ${event.type}`);
+        // console.log(`Unhandled event type ${event.type}`);
     }
   
     // Return a 200 response to acknowledge receipt of the event

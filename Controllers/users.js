@@ -370,7 +370,6 @@ const findallemail = async(req,res) =>{
 const forgotPassword =async(req,res) => {
     const email = req.body.email
     const password = req.body.password
-    console.log(req.body)
     const salt = bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS));
     const hash = bcrypt.hashSync(password, salt);
     try{
@@ -382,7 +381,6 @@ const forgotPassword =async(req,res) => {
         if(finduser.length===0){
             return res.json("No user found")
         }else{
-            console.log(finduser)
             if(req.body.password.trim()==""){
                 return res.json({message:"Password cannot be empty"})
             }else{
@@ -396,7 +394,6 @@ const forgotPassword =async(req,res) => {
                         }
                     })
                     res.json(updatepass)
-                    console.log("can update password")
                 }catch(error){
                     console.log("error")
                     res.json(error)
